@@ -1,42 +1,57 @@
 %{
-    
-    // Wrtie all C code definitions
-    
-    // Define all data structures here......
-    
-    
-    
-    // Define all global variables here.......
-
-    extern char lex_buffer[512]
-
-    
-    char lex_buffer[512];
-    
-    %}
-
-    %%
-
-// Write all regular expression to generate tokens here.......
 
 
-    %%
-
-    // C main function
-
-    int main(int argc, char **argv){
-        while(1){
-            fgets(lex_buffer,sizeof(lex_buffer),stdin);
+#include <stdio.h>
+#include <string.h>
+#include "MexprEnums.h"
 
 
-            // It checks if user presses enter means first character is a new line
-            if(lex_buffer[0]=='\n'){
-                lex_buffer[0]=0;
-                continue;
-            }
+//Define Global Variables
+extern char lex_buffer[512];
 
 
-            yy_scan_string(lex_buffer);
+char lex_buffer[512];
+%}
+
+%%
+
+\n                      { return PARSER_EOL; }
+
+0|-?[1-9][0-9]*         { return MATH_CPP_INT; }
+
+-?[0-9]*\.[0-9]+        { return MATH_CPP_DOUBLE; }
+
+[a-zA-Z_][a-zA-Z0-9_]*  { return MATH_CPP_VARIABLE; }
+
+[ \t]+                  { /* ignore whitespace */ }
+
+.                       { printf("Unrecognized token: %s\n", yytext); }
+
+%%
+
+
+int main(int argc, char **argv) {
+    while (1) {
+        printf("Enter the input >> ");
+        fgets(lex_buffer, sizeof(lex_buffer), stdin);
+
+        if (lex_buffer[0] == '\n'){
+            lex_buffer[0]=0;
+            continue;
         }
-        return 0;
+
+        yy_scan_string(lex_buffer);
+        int token = yylex();
+
+        while (token != PARSER_EOL) {
+            printf("token = %d, text = %s, len = %lu\n", token, yytext, strlen(yytext));
+            token = yylex();
+        }
     }
+    return 0;
+}
+
+
+int yywrap() {
+    return 1;
+}
