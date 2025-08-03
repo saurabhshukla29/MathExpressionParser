@@ -1,53 +1,109 @@
 %{
 
-
-#include <stdio.h>
-#include <string.h>
-#include "MexprEnums.h"
+#include "ParserExport.h"
 
 
-//Define Data Structures Here...
-
-typedef struct lex_data{
-    int token;
-    int token_len;
-    char *token_val;
-}lex_data_t;                // It is basically aliasing the struct- we don't have to use struct when we are declaring.
-
-
-int MAX_LEN=512;
-int MAX_STRING_SIZE=512;
-
-typedef struct stack{
-    int top;
-    lex_data_t data[MAX_LEN];
-}stack_t;
-
-
-//Define Global Variables
-extern char lex_buffer[MAX_STRING_SIZE];
-extern stack_t undo_stack;
+stack_t undo_stack = {-1,{0,0,0}};
 
 char lex_buffer[MAX_STRING_SIZE];
+char *curr_ptr = lex_buffer;
+char *lex_curr_token = NULL;
+int lex_curr_length = 0;
+
 
 
 static void
-push(stack_t st, lex_data_t a){
+lex_push(stack_t st, lex_data_t a){
     if(st.top<MAX_LEN){
         st.data[++st.top]=a;
+        lex_curr_token = (char * )a.token_val;
+        lex_curr_length = a.token_len;
     }
 }
 
 static lex_data_t
-pop(stack_t st){
-    if(st.top()>-1){
-        int ans=st.data[st.top];
-        st.top()--;
+lex_pop(stack_t st){
+    if(st.top > -1){
+        lex_data_t ans=st.data[st.top];
+        st.top--;
+        if(st.top > -1){
+            lex_data_t lex_data = st.data[st.top];
+            lex_curr_token = lex_data.token_val;
+            lex_curr_length = lex_data.token_len;
+        }else{
+            lex_curr_token = NULL;
+            lex_curr_length = 0;
+        }
         return ans;
-    }else return {-1,{0,0,0}};
+    }
+    return (lex_data_t){-1,0,NULL};
 }
 
-stack_t undo_stack={-1,{0,0,0}};
+
+
+int cyylex(){
+    int token_code = yylex();
+    lex_data_t lex_data;
+    lex_data.token_code = token_code;
+    lex_data.token_len = yyleng;
+    curr_ptr += yyleng;
+    lex_data.token_val = (char *)calloc(1, yyleng + 1);
+    strcpy(lex_data.token_val, yytext);
+    lex_push(undo_stack,lex_data);
+    return token_code;
+}
+
+static void process_white_space(int n){
+    lex_data_t lex_data;
+    lex_data.token_code = PARSER_WHITE_SPACE;
+    lex_data.token_len = n;
+    curr_ptr += n;
+    lex_data.token_val = NULL;
+    lex_push(undo_stack, lex_data);
+}
+
+
+void Parser_stack_reset(){
+    int i;
+    lex_data_t *lex_data;
+
+    for (i = 0; i < undo_stack.top; i++) {
+        lex_data = &undo_stack.data[i];
+        lex_data->token_code = 0;
+        lex_data->token_len = 0;
+        if (lex_data->token_val) {
+            free(lex_data->token_val);
+            lex_data->token_val = NULL;
+        }
+    }
+    undo_stack.top = -1;
+    curr_ptr = lex_buffer;
+    lex_curr_token = NULL;
+    lex_curr_length = 0;
+}
+
+void lex_set_scan_buffer (const char *buffer) {
+    yy_scan_string(buffer);
+}
+
+// n->No. of words wants to remove from stack
+void yyrewind(int n){
+    if(n<=0) return;
+    if(curr_ptr==lex_buffer) return;
+    int data_len=0;
+    lex_data_t lex_data;
+    while(n){
+        lex_data = lex_pop(undo_stack);
+        data_len += lex_data.token_len;
+        if(lex_data.token_code == PARSER_WHITE_SPACE){
+            continue;
+        }else{
+            n--;
+        }
+    }
+    curr_ptr -= data_len;
+    yy_scan_string(curr_ptr);
+}
 
 %}
 
@@ -206,11 +262,11 @@ int main(int argc, char **argv) {
         }
 
         yy_scan_string(lex_buffer);
-        int token = yylex();
+        int token_code = yylex();
 
-        while (token != PARSER_EOL) {
-            printf("token = %d, text = %s, len = %lu\n", token, yytext, strlen(yytext));
-            token = yylex();
+        while (token_code!= PARSER_EOL) {
+            printf("token_code = %d, text = %s, len = %lu\n", token_code, yytext, strlen(yytext));
+            token_code = yylex();
         }
     }
     return 0;
