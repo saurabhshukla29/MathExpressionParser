@@ -63,6 +63,17 @@ static void process_white_space(int n){
 }
 
 
+/*
+Why free() is Only Used for token_val
+Because free() is only needed for memory that was dynamically allocated using malloc(), calloc(), etc.
+
+token_code and token_len are just int values. They're stored inside the struct and are not pointers.
+
+Their memory is part of the struct itself and is freed automatically when the struct goes out of scope 
+(if it's on the stack) or when you free(&undo_stack) (if it's on the heap).
+No malloc() → No free() needed.
+*/
+
 void Parser_stack_reset(){
     int i;
     lex_data_t *lex_data;
@@ -103,6 +114,22 @@ void yyrewind(int n){
     }
     curr_ptr -= data_len;
     yy_scan_string(curr_ptr);
+}
+
+void RESTORE_CHKP(int a){
+    while(undo_stack.top > a){
+        lex_data_t data = lex_pop(undo_stack);
+        curr_ptr -= data.token_len;
+        data.token_code = 0;
+        data.token_len = 0;
+        free(data.token_val);
+        data.token_val = NULL;
+    }
+    yy_scan_string(curr_ptr);
+    if(undo_stack.top >= 0){
+        lex_curr_length -= undo_stack.data[undo_stack.top].token_len;
+        lex_curr_token = undo_stack.data[undo_stack.top].token_val;
+    }
 }
 
 %}
