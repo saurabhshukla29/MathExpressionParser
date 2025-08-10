@@ -11,6 +11,12 @@ extern int yylex();
 
 //Define Data Structures Here...
 
+typedef enum parse_rc_{
+
+    PARSE_SUCCESS,
+    PARSE_ERR
+}parse_rc_t;
+
 typedef struct lex_data{
     int token_code;
     int token_len;
@@ -54,14 +60,16 @@ extern void RESTORE_CHKP(int a);
     __FUNCTION__, __LINE__, token_obtained, lex_curr_token, expected_token);
 
 
-#define RETURN_PARSE_ERROR  \
-    {RESTORE_CHKP(_lchkp);     \
-    return PARSE_ERR;}
-
-#define parse_init()    \
-        int token_code=0    \
-        int _lchkp=undo_stack.top()    \
+#define parse_init()   \
+        int token_code=0;    \
+        int _lchkp=undo_stack.top;    \
         parse_rc_t err = PARSE_SUCCESS
 
+
+#define RETURN_PARSE_ERROR  \
+    {RESTORE_CHKP(_lchkp);       \
+    return PARSE_ERR;}           \
+
+    
 
 #endif

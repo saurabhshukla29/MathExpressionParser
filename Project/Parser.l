@@ -13,21 +13,21 @@ int lex_curr_length = 0;
 
 
 static void
-lex_push(stack_t st, lex_data_t a){
-    if(st.top<MAX_LEN){
-        st.data[++st.top]=a;
+lex_push(stack_t *st, lex_data_t a){
+    if(st->top < MAX_LEN){
+        st->data[++st->top]=a;
         lex_curr_token = (char * )a.token_val;
         lex_curr_length = a.token_len;
     }
 }
 
 static lex_data_t
-lex_pop(stack_t st){
-    if(st.top > -1){
-        lex_data_t ans=st.data[st.top];
-        st.top--;
-        if(st.top > -1){
-            lex_data_t lex_data = st.data[st.top];
+lex_pop(stack_t *st){
+    if(st->top > -1){
+        lex_data_t ans=st->data[st->top];
+        st->top--;
+        if(st->top > -1){
+            lex_data_t lex_data = st->data[st->top];
             lex_curr_token = lex_data.token_val;
             lex_curr_length = lex_data.token_len;
         }else{
@@ -49,7 +49,7 @@ int cyylex(){
     curr_ptr += yyleng;
     lex_data.token_val = (char *)calloc(1, yyleng + 1);
     strcpy(lex_data.token_val, yytext);
-    lex_push(undo_stack,lex_data);
+    lex_push(&undo_stack,lex_data);
     return token_code;
 }
 
@@ -59,7 +59,7 @@ static void process_white_space(int n){
     lex_data.token_len = n;
     curr_ptr += n;
     lex_data.token_val = NULL;
-    lex_push(undo_stack, lex_data);
+    lex_push(&undo_stack, lex_data);
 }
 
 
@@ -100,11 +100,11 @@ void lex_set_scan_buffer (const char *buffer) {
 // n->No. of words wants to remove from stack
 void yyrewind(int n){
     if(n<=0) return;
-    if(curr_ptr==lex_buffer) return;
+    if(curr_ptr == lex_buffer) return;
     int data_len=0;
     lex_data_t lex_data;
     while(n){
-        lex_data = lex_pop(undo_stack);
+        lex_data = lex_pop(&undo_stack);
         data_len += lex_data.token_len;
         if(lex_data.token_code == PARSER_WHITE_SPACE){
             continue;
@@ -117,18 +117,20 @@ void yyrewind(int n){
 }
 
 void RESTORE_CHKP(int a){
+    int len=0;
     while(undo_stack.top > a){
-        lex_data_t data = lex_pop(undo_stack);
-        curr_ptr -= data.token_len;
-        data.token_code = 0;
-        data.token_len = 0;
-        free(data.token_val);
-        data.token_val = NULL;
+        lex_data_t data = lex_pop(&undo_stack);
+        len += data.token_len;
+        if(data.token_val){
+            free(data.token_val);
+            data.token_val = NULL;
+        }
     }
+    curr_ptr -= len;
     yy_scan_string(curr_ptr);
     if(undo_stack.top >= 0){
-        lex_curr_length -= undo_stack.data[undo_stack.top].token_len;
         lex_curr_token = undo_stack.data[undo_stack.top].token_val;
+        lex_curr_length -= undo_stack.data[undo_stack.top].token_len;
     }
 }
 
@@ -230,12 +232,12 @@ void RESTORE_CHKP(int a){
 
 [ ] {
     /* Ignore */
-    //process_white_space(1);
+    process_white_space(1);
 }
 
 [\t] {
     /*ignore*/
-    //process_white_space(4);
+    process_white_space(4);
 }
 
 "\\q" {
@@ -277,6 +279,7 @@ void RESTORE_CHKP(int a){
 
 %%
 
+extern parse_rc_t A();
 
 int main(int argc, char **argv) {
     while (1) {
@@ -289,12 +292,27 @@ int main(int argc, char **argv) {
         }
 
         yy_scan_string(lex_buffer);
+        /*
         int token_code = yylex();
 
         while (token_code!= PARSER_EOL) {
             printf("token_code = %d, text = %s, len = %lu\n", token_code, yytext, strlen(yytext));
             token_code = yylex();
         }
+        */
+        parse_rc_t err= A();
+        if(err == PARSE_ERR){
+            printf("A : Rejected\n");
+        }else{
+            printf("A : Accepted\n");
+            printf("%d\n", undo_stack.top);
+            for(int i=0;i<=undo_stack.top;i++){
+                lex_data_t *data = &undo_stack.data[i];
+                printf("%s ", data->token_val);
+            }
+            printf("\n");
+        }
+        Parser_stack_reset();
     }
     return 0;
 }
