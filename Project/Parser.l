@@ -280,6 +280,7 @@ void RESTORE_CHKP(int a){
 %%
 
 extern parse_rc_t A();
+extern parse_rc_t Q();
 
 int main(int argc, char **argv) {
     while (1) {
@@ -300,6 +301,7 @@ int main(int argc, char **argv) {
             token_code = yylex();
         }
         */
+        /*
         parse_rc_t err= A();
         if(err == PARSE_ERR){
             printf("A : Rejected\n");
@@ -311,6 +313,13 @@ int main(int argc, char **argv) {
                 printf("%s ", data->token_val);
             }
             printf("\n");
+        }
+        */
+        parse_rc_t err = Q();
+        if(err == PARSE_ERR){
+            printf("Rejected : Invalid Select Statement\n");
+        }else{
+            printf("Accepted : Valid Statement \n");
         }
         Parser_stack_reset();
     }
