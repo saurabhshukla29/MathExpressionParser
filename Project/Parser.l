@@ -281,6 +281,7 @@ void RESTORE_CHKP(int a){
 
 extern parse_rc_t A();
 extern parse_rc_t Q();
+extern parse_rc_t E();
 
 int main(int argc, char **argv) {
     while (1) {
@@ -293,6 +294,9 @@ int main(int argc, char **argv) {
         }
 
         yy_scan_string(lex_buffer);
+
+
+
         /*
         int token_code = yylex();
 
@@ -301,6 +305,10 @@ int main(int argc, char **argv) {
             token_code = yylex();
         }
         */
+
+
+
+
         /*
         parse_rc_t err= A();
         if(err == PARSE_ERR){
@@ -315,11 +323,28 @@ int main(int argc, char **argv) {
             printf("\n");
         }
         */
+
+
+
+        /*
         parse_rc_t err = Q();
         if(err == PARSE_ERR){
             printf("Rejected : Invalid Select Statement\n");
         }else{
             printf("Accepted : Valid Statement \n");
+        }
+        */
+
+
+
+        parse_rc_t err = E();
+        int token_code = cyylex();
+        if(token_code != PARSER_EOL){
+            printf("Rejected : Entire String is not Mathematical Expression\n");
+        }else{
+            if(err == PARSE_ERR){
+                printf("Rejected : Invalid Mathematical Expression\n");
+            }else printf("Accepted : Valid Expression\n");
         }
         Parser_stack_reset();
     }
