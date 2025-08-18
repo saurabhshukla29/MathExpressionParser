@@ -31,6 +31,7 @@ typedef enum {
     MATH_CPP_LESS_THAN,
     MATH_CPP_LESS_THAN_EQ,
     MATH_CPP_GREATER_THAN,
+    MATH_CPP_GREATER_THAN_EQ,
 
     /* Logical Operators */
     MATH_CPP_OR,
@@ -100,6 +101,7 @@ Math_cpp_operator_precedence (int token_code) {
         case MATH_CPP_GREATER_THAN:
         case MATH_CPP_NEQ:
         case MATH_CPP_EQ:
+        case MATH_CPP_GREATER_THAN_EQ:
             return 3;
         case MATH_CPP_AND:
             return 2;

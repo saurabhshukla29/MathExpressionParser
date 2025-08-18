@@ -28,16 +28,29 @@ Combining Everything , final grammar is :
 
 */
 
+
+/*
+
+Adding Inequlity to the grammar :
+
+Inequality nothing but -> mathematical expression Inequality mathematical expression
+
+6. Q -> E Ineq E
+7. Ineq -> < | > | <= | >= | = | !=
+*/
+
 #include <stdio.h>
 #include<string.h>
 #include "MexprEnums.h"
 #include "ParserExport.h"
 
-parse_rc_t E();
+static parse_rc_t E();
 static parse_rc_t E_dash();
 static parse_rc_t T();
 static parse_rc_t T_dash();
 static parse_rc_t F();
+static parse_rc_t Ineq();
+parse_rc_t Q();
 
 
 // F -> ( E ) | INTEGER | DECIMAL | VAR
@@ -203,5 +216,44 @@ parse_rc_t E() {
     if(err == PARSE_ERR) {
         RETURN_PARSE_ERROR;
     }
+    RETURN_PARSE_SUCCESS;
+}
+
+
+// Ineq -> < | > | <= | >= | = | !=
+parse_rc_t Ineq() {
+    parse_init();
+
+    token_code = cyylex();
+    if(token_code == MATH_CPP_LESS_THAN ||
+       token_code == MATH_CPP_GREATER_THAN ||
+       token_code == MATH_CPP_LESS_THAN_EQ ||
+       token_code == MATH_CPP_GREATER_THAN_EQ ||
+       token_code == MATH_CPP_EQ ||
+       token_code == MATH_CPP_NEQ) {
+        RETURN_PARSE_SUCCESS;
+    }
+
+    RETURN_PARSE_ERROR;
+}
+
+
+// Q -> E Ineq E
+parse_rc_t Q(){
+    parse_init();
+
+    err = E();
+    if(err == PARSE_ERR) {
+        RETURN_PARSE_ERROR;
+    }
+    err = Ineq();
+    if(err == PARSE_ERR) {
+        RETURN_PARSE_ERROR;
+    }
+    err = E();
+    if(err == PARSE_ERR) {
+        RETURN_PARSE_ERROR;
+    }
+
     RETURN_PARSE_SUCCESS;
 }
