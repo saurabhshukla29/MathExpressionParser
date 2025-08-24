@@ -39,6 +39,13 @@ Inequality nothing but -> mathematical expression Inequality mathematical expres
 7. Ineq -> < | > | <= | >= | = | !=
 */
 
+/*
+Adding binary and unary operators to the grammar :
+5. F -> (E) | INTEGER | DECIMAL | VAR | G(E,E) | P(E)
+8. G -> max | min | pow
+9. P -> sqrt | sqr | sin
+*/
+
 #include <stdio.h>
 #include<string.h>
 #include "MexprEnums.h"
@@ -50,10 +57,38 @@ static parse_rc_t T();
 static parse_rc_t T_dash();
 static parse_rc_t F();
 static parse_rc_t Ineq();
+static parse_rc_t G();
+static parse_rc_t P();
 parse_rc_t Q();
 
 
-// F -> ( E ) | INTEGER | DECIMAL | VAR
+// P -> sqrt | sqr | sin
+parse_rc_t P(){
+    parse_init();
+    token_code = cyylex();
+    if(token_code == MATH_CPP_SQRT ||
+        token_code == MATH_CPP_SQR ||
+        token_code == MATH_CPP_SIN ){
+        RETURN_PARSE_SUCCESS;
+    }
+    RETURN_PARSE_ERROR;
+}
+
+
+// G -> max | min | pow
+parse_rc_t G(){
+    parse_init();
+    token_code = cyylex();
+    if(token_code == MATH_CPP_MAX ||
+        token_code == MATH_CPP_MIN ||
+        token_code == MATH_CPP_POW){
+        RETURN_PARSE_SUCCESS;
+    }
+    RETURN_PARSE_ERROR;
+}
+
+
+// F -> ( E ) | INTEGER | DECIMAL | VAR | STRING | G(E,E) | P(E)
 parse_rc_t F(){
     parse_init();
     int initial_lchkp;
@@ -76,16 +111,69 @@ parse_rc_t F(){
     }while(0);
     RESTORE_CHKP(initial_lchkp);
 
-    // F -> INTEGER | DECIMAL | VAR
+
+    // F -> G(E, E)
+    do{
+        err = G();
+        if(err == PARSE_ERR){
+            break;
+        }
+        token_code = cyylex();
+        if(token_code != MATH_CPP_BRACKET_START){
+            break;
+        }
+        err = E();
+        if(err == PARSE_ERR){
+            break;
+        }
+        token_code = cyylex();
+        if(token_code != MATH_CPP_COMMA){
+            break;
+        }
+        err = E();
+        if(err == PARSE_ERR){
+            break;
+        }
+        token_code = cyylex();
+        if(token_code != MATH_CPP_BRACKET_END){
+            break;
+        }
+        RETURN_PARSE_SUCCESS;
+        
+    }while(0);
+    RESTORE_CHKP(initial_lchkp);
+
+    // F -> P(E)
+    do{
+        err = P();
+        if(err == PARSE_ERR){
+            break;
+        }
+        token_code = cyylex();
+        if(token_code != MATH_CPP_BRACKET_START){
+            break;
+        }
+        err = E();
+        if(err == PARSE_ERR){
+            break;
+        }
+        token_code = cyylex();
+        if(token_code != MATH_CPP_BRACKET_END){
+            break;
+        }
+        RETURN_PARSE_SUCCESS;
+    }while(0);
+    RESTORE_CHKP(initial_lchkp);
+
+    // F -> INTEGER | DECIMAL | VAR | STRING
     do{
         token_code = cyylex();
         if(token_code == MATH_CPP_INT || token_code == MATH_CPP_DOUBLE || 
-            token_code == MATH_CPP_VARIABLE){
+            token_code == MATH_CPP_VARIABLE || token_code == MATH_CPP_STRING){
             RETURN_PARSE_SUCCESS;
         } 
         RETURN_PARSE_ERROR;
     }while(0);
-    RETURN_PARSE_ERROR;
 }
 
 
@@ -133,7 +221,6 @@ parse_rc_t T_dash() {
         RETURN_PARSE_SUCCESS;   
     }while(0);
     RESTORE_CHKP(initial_lchkp);
-
     // T' -> $
     RETURN_PARSE_SUCCESS;
 }
@@ -181,7 +268,6 @@ parse_rc_t E_dash(){
         RETURN_PARSE_SUCCESS;   
     }while(0);
     RESTORE_CHKP(initial_lchkp);
-
     // E' -> $
     RETURN_PARSE_SUCCESS;
 }
@@ -223,7 +309,6 @@ parse_rc_t E() {
 // Ineq -> < | > | <= | >= | = | !=
 parse_rc_t Ineq() {
     parse_init();
-
     token_code = cyylex();
     if(token_code == MATH_CPP_LESS_THAN ||
        token_code == MATH_CPP_GREATER_THAN ||
@@ -233,7 +318,6 @@ parse_rc_t Ineq() {
        token_code == MATH_CPP_NEQ) {
         RETURN_PARSE_SUCCESS;
     }
-
     RETURN_PARSE_ERROR;
 }
 

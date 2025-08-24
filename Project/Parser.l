@@ -1,7 +1,20 @@
 %{
 
 #include "ParserExport.h"
+#ifndef CONVERTER_H
+#define CONVERTER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+lex_data_t **convertInfixToPostfix(lex_data_t *data, int size, int *out_size);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
 
 stack_t undo_stack = {-1,{0,0,0}};
 
@@ -202,11 +215,11 @@ void RESTORE_CHKP(int a){
     return MATH_CPP_SQR;
 }
 
-"mmax" {
+"max" {
     return MATH_CPP_MAX;
 }
 
-"mmin" {
+"min" {
     return MATH_CPP_MIN;
 }
 
@@ -344,7 +357,26 @@ int main(int argc, char **argv) {
         }else{
             if(err == PARSE_ERR){
                 printf("Rejected : Invalid Mathematical Expression\n");
-            }else printf("Accepted : Valid Expression\n");
+            }else{
+                printf("Accepted : Valid Expression\n");
+                printf("Expression :");
+                for(int i = 0; i <= undo_stack.top; i++){
+                    lex_data_t *lex_data = &undo_stack.data[i];
+                    printf("%s", lex_data -> token_val);
+                }
+                printf("\n");
+                int size_out = 0;
+                lex_data_t **postfixArray = convertInfixToPostfix(undo_stack.data,
+                                                                undo_stack.top + 1,
+                                                                &size_out);
+                printf("Postfix: ");
+                printf("%d\n",size_out);
+                for(int i = 0;i < size_out; i++){
+                    lex_data_t *lex_data = postfixArray[i];
+                    printf("%s", lex_data -> token_val);
+                }
+                printf("\n");
+            }
         }
         Parser_stack_reset();
     }
