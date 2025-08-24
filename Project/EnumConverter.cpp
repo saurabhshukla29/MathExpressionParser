@@ -9,7 +9,9 @@ extern "C" lex_data_t** convertInfixToPostfix(lex_data_t *infix, int size_in, in
     *size_out = 0;
 
     for (int i = 0; i < size_in; i++) {
-        if (infix[i].token_code == PARSER_WHITE_SPACE || infix[i].token_code == PARSER_EOL) {
+        if (infix[i].token_code == PARSER_WHITE_SPACE || 
+            infix[i].token_code == PARSER_EOL ||
+            infix[i].token_code == MATH_CPP_COMMA) {
             continue;
         }
 
@@ -17,8 +19,11 @@ extern "C" lex_data_t** convertInfixToPostfix(lex_data_t *infix, int size_in, in
             !Math_cpp_is_operator(infix[i].token_code)) {
             assert(false);
         }
-
-        if (infix[i].token_code == (int)MATH_CPP_BRACKET_START) {
+        
+        if (Math_cpp_is_operand(infix[i].token_code)) {
+            postfixArray.push_back(&infix[i]);
+            (*size_out)++;
+        }else if (infix[i].token_code == (int)MATH_CPP_BRACKET_START) {
             opStack.push_back(&infix[i]);
         } else if (infix[i].token_code == (int)MATH_CPP_BRACKET_END) {
             while (!opStack.empty() && opStack.back()->token_code != (int)MATH_CPP_BRACKET_START) {
@@ -27,10 +32,7 @@ extern "C" lex_data_t** convertInfixToPostfix(lex_data_t *infix, int size_in, in
                 (*size_out)++;
             }
             if (!opStack.empty()) opStack.pop_back(); // remove '('
-        } else if (Math_cpp_is_operand(infix[i].token_code)) {
-            postfixArray.push_back(&infix[i]);
-            (*size_out)++;
-        }else {
+        }else if(Math_cpp_is_operator(infix[i].token_code)) {
             while (!opStack.empty() && 
                    Math_cpp_operator_precedence(infix[i].token_code) <=
                    Math_cpp_operator_precedence(opStack.back()->token_code)) {

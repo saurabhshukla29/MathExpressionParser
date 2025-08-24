@@ -109,6 +109,7 @@ Math_cpp_operator_precedence (int token_code) {
             return 1;
         case MATH_CPP_BRACKET_START:
         case MATH_CPP_BRACKET_END:
+        case MATH_CPP_COMMA:
             return 0;
     }
     assert(0);
