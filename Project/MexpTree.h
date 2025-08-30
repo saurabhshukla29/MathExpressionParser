@@ -16,7 +16,7 @@ class MexpNode{
     virtual ~MexpNode();
 };
 
-typedef struct lex_data_t;
+typedef struct lex_data_ lex_data_t;
 class MexpTree{
 
     private:

@@ -1,6 +1,7 @@
 #ifndef _DTYPE_H_
 #define _DTYPE_H_
 
+#include<string>
 #include "MexprEnums.h"
 #include "MexpTree.h"
 
@@ -13,6 +14,8 @@ class Dtype : public MexpNode {
     virtual ~Dtype();
 };
 
+
+// Integer Dtype
 class Dtype_INT : public Dtype{
 
     private:
@@ -25,6 +28,8 @@ class Dtype_INT : public Dtype{
 
 };
 
+
+// Double Dtype
 class Dtype_DOUBLE : public Dtype{
     
     private:
@@ -34,6 +39,18 @@ class Dtype_DOUBLE : public Dtype{
     Dtype_DOUBLE();
     Dtype_DOUBLE(double val);  // parametrized constructor
     ~Dtype_DOUBLE();
+};
+
+
+// String Dtype
+class Dtype_STRING : public Dtype{
+    
+    private:
+    protected:
+    public:
+    std :: string string_val;
+    Dtype_STRING();
+    ~Dtype_STRING();
 };
 
 #endif

@@ -1,12 +1,16 @@
 #include "Dtype.h"
+#include <bits/stdc++.h>
 using namespace std;
 
 // :: scope resolution operator
-// This operator is used to define a function outside the class
+// This operator is used to define a constructor outside the class
 Dtype :: Dtype(){
     this -> d_id = MATH_CPP_DTYPE_INVALID;
 }
 
+Dtype :: ~Dtype(){
+    // cout << "Dtype destructor called" << endl;
+}
 
 // Concrete class now :
 
@@ -20,7 +24,7 @@ Dtype_INT :: Dtype_INT(int val){
     this -> int_val = val;
 }
 
-Dtype :: ~Dtype(){
+Dtype_INT :: ~Dtype_INT(){
     // cout << "Dtype destructor called" << endl;
 }
 
@@ -38,4 +42,15 @@ Dtype_DOUBLE :: Dtype_DOUBLE(double val){
 
 Dtype_DOUBLE :: ~Dtype_DOUBLE(){
     // cout << "Dtype_DOUBLE destructor called" << endl;
+}
+
+
+
+// String Dtype
+Dtype_STRING :: Dtype_STRING(){
+    this -> d_id = MATH_CPP_STRING;
+}   
+
+Dtype_STRING :: ~Dtype_STRING(){
+    // cout << "Dtype_STRING destructor called" << endl;
 }
