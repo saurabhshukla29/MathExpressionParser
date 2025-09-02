@@ -15,6 +15,7 @@ class Operator : public MexpNode{
     int op_id;  // operator id
     std :: string name;
     bool isUnary;
+    static Operator * factory(mexprcpp_operators_t op_id);
 };
 
 // + operator

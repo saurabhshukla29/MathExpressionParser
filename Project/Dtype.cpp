@@ -28,7 +28,14 @@ Dtype_INT :: ~Dtype_INT(){
     // cout << "Dtype destructor called" << endl;
 }
 
+void Dtype_INT :: setValue(void *value){
+    this -> int_val = atoi((char *)value);
+}
 
+void Dtype_INT :: setValue(Dtype *dtype){
+    Dtype_INT *int_dtype = dynamic_cast<Dtype_INT *>(dtype);
+    this -> int_val = int_dtype -> int_val;
+}
 
 // Double Dtype
 Dtype_DOUBLE :: Dtype_DOUBLE(){
@@ -44,6 +51,14 @@ Dtype_DOUBLE :: ~Dtype_DOUBLE(){
     // cout << "Dtype_DOUBLE destructor called" << endl;
 }
 
+void Dtype_DOUBLE :: setValue(void *value){
+    this -> double_val = (double)atof((char *)value);
+}
+
+void Dtype_DOUBLE :: setValue(Dtype *dtype){
+    Dtype_DOUBLE *double_dtype = dynamic_cast<Dtype_DOUBLE *>(dtype);
+    this -> double_val = double_dtype -> double_val;
+}
 
 
 // String Dtype
@@ -53,4 +68,39 @@ Dtype_STRING :: Dtype_STRING(){
 
 Dtype_STRING :: ~Dtype_STRING(){
     // cout << "Dtype_STRING destructor called" << endl;
+}
+
+void Dtype_STRING :: setValue(void *value){
+    this -> string_val.assign(std :: string((char *)value));
+
+    // remove the double quotes from the string if present
+    this -> string_val.erase(remove(this -> string_val.begin(), this -> string_val.end(), '\"'), 
+                            this -> string_val.end());
+
+    // remove the single quotes from the string if present
+    this -> string_val.erase(remove(this -> string_val.begin(), this -> string_val.end(), '\''), 
+                            this -> string_val.end());
+}
+
+void Dtype_STRING :: setValue(Dtype *dtype){
+    Dtype_STRING *string_dtype = dynamic_cast<Dtype_STRING *>(dtype);
+    this -> string_val = string_dtype -> string_val;
+}
+
+
+// General Rule of defining function outside class
+// <return-type> <ClassName>::<FunctionName>(parameters) { ... }
+Dtype* Dtype :: factory(mexprcpp_dtypes_t d_id){
+    switch (d_id)
+    {
+    case (int)MATH_CPP_INT:
+        return new Dtype_INT();
+    case (int)MATH_CPP_DOUBLE:
+        return new Dtype_DOUBLE();
+    case (int)MATH_CPP_STRING:
+        return new Dtype_STRING();
+    default:
+        assert(false); // should never reach here
+        return nullptr;
+    }
 }

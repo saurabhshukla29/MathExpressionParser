@@ -145,3 +145,36 @@ OperatorMin :: OperatorMin(){
 OperatorMin :: ~OperatorMin(){
     // cout << "OperatorMin Destructor called" << endl;
 }
+
+Operator * Operator :: factory(mexprcpp_operators_t op_id){
+    switch (op_id)
+    {
+    case (int)MATH_CPP_PLUS:
+        return new OperatorPlus();
+    case (int)MATH_CPP_MINUS:
+        return new OperatorMinus();
+    case (int)MATH_CPP_MUL:
+        return new OperatorMul();
+    case (int)MATH_CPP_DIV:
+        return new OperatorDiv();
+    case (int)MATH_CPP_EQ:
+        return new OperatorEq();
+    case (int)MATH_CPP_NEQ:
+        return new OperatorNeq();
+    case (int)MATH_CPP_LESS_THAN:
+        return new OperatorLessthan();
+    case (int)MATH_CPP_GREATER_THAN:
+        return new OperatorGreaterthan();
+    case (int)MATH_CPP_SQR:
+        return new OperatorSqr();
+    case (int)MATH_CPP_SQRT:
+        return new OperatorSqrt();
+    case (int)MATH_CPP_MAX:
+        return new OperatorMax();
+    case (int)MATH_CPP_MIN:
+        return new OperatorMin();
+    default:
+        assert(false); // should never reach here
+        return nullptr;
+    }
+}

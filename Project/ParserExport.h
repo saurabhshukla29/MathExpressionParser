@@ -29,7 +29,7 @@ typedef struct lex_data{
 #define PARSER_EOL 10000
 #define PARSER_WHITE_SPACE 10002
 
-typedef struct stack{
+typedef struct _stack{
     int top;
     lex_data_t data[MAX_LEN];
 }stack_t;

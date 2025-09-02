@@ -12,6 +12,9 @@ class Dtype : public MexpNode {
     public:
     mexprcpp_dtypes_t d_id;   // Dtype ID
     virtual ~Dtype();
+    static Dtype * factory(mexprcpp_dtypes_t did);
+    virtual void setValue(void *value) = 0;
+    virtual void setValue (Dtype *) = 0;
 };
 
 
@@ -25,7 +28,8 @@ class Dtype_INT : public Dtype{
     Dtype_INT();
     Dtype_INT(int val);  // parametrized constructor
     ~Dtype_INT();
-
+    virtual void setValue(void *value) override;
+    virtual void setValue (Dtype *) override;
 };
 
 
@@ -39,6 +43,8 @@ class Dtype_DOUBLE : public Dtype{
     Dtype_DOUBLE();
     Dtype_DOUBLE(double val);  // parametrized constructor
     ~Dtype_DOUBLE();
+    virtual void setValue(void *value) override;
+    virtual void setValue (Dtype *) override;
 };
 
 
@@ -51,6 +57,8 @@ class Dtype_STRING : public Dtype{
     std :: string string_val;
     Dtype_STRING();
     ~Dtype_STRING();
+    virtual void setValue(void *value) override;
+    virtual void setValue (Dtype *) override;
 };
 
 #endif
