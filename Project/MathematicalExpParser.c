@@ -51,7 +51,7 @@ Adding binary and unary operators to the grammar :
 #include "MexprEnums.h"
 #include "ParserExport.h"
 
-static parse_rc_t E();
+parse_rc_t E();
 static parse_rc_t E_dash();
 static parse_rc_t T();
 static parse_rc_t T_dash();

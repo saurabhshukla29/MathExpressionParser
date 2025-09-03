@@ -5,6 +5,7 @@
 #include<stdlib.h>
 #include<stdint.h>
 #include "MexprEnums.h"
+#include "ParserExport.h"
 
 class MexpNode{
     private:
@@ -21,7 +22,6 @@ class MexpNode{
     MexpNode *First_right;
 };
 
-typedef struct lex_data_ lex_data_t;
 class MexpTree{
 
     private:
@@ -31,6 +31,8 @@ class MexpTree{
     MexpNode *First_head;
     MexpTree();
     MexpTree(lex_data_t **postfix_array, int size); // constructor
+    static void Inorder( MexpTree *tree );
+    virtual ~MexpTree();
 };
 
 #endif

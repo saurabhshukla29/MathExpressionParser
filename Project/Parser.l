@@ -1,6 +1,7 @@
 %{
 
 #include "ParserExport.h"
+#include "MexpTree.h"
 #ifndef CONVERTER_H
 #define CONVERTER_H
 
@@ -350,7 +351,7 @@ int main(int argc, char **argv) {
 
 
 
-        parse_rc_t err = Q();
+        parse_rc_t err = E();
         int token_code = cyylex();
         if(token_code != PARSER_EOL){
             printf("Rejected : Entire String is not Mathematical Expression\n");
@@ -374,7 +375,13 @@ int main(int argc, char **argv) {
                 for(int i = 0;i < size_out; i++){
                     lex_data_t *lex_data = postfixArray[i];
                     printf("%s", lex_data -> token_val);
+                    printf(" ");
                 }
+                printf("\n");
+                printf("Constructing Expression Tree\n");
+                MexpTree *Tree = new MexpTree(postfixArray,size_out);
+                printf("Tree \n");
+                MexpTree :: Inorder(Tree);
                 printf("\n");
             }
         }

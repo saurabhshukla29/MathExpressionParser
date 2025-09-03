@@ -22,6 +22,11 @@ MexpTree :: MexpTree(){
     this -> First_head = NULL;
 }
 
+MexpTree :: ~MexpTree(){
+    // cout << "MexpTree Destructor called" << endl;
+}
+
+
 MexpTree :: MexpTree(lex_data_t **postfix_array, int size){
     
     stack <MexpNode*> st;
@@ -32,6 +37,7 @@ MexpTree :: MexpTree(lex_data_t **postfix_array, int size){
         }
         if(Math_cpp_is_operand(postfix_array[i] -> token_code)){
             MexpNode *node = Dtype :: factory((mexprcpp_dtypes_t)postfix_array[i] -> token_code);
+            st.push(node);
         }else if(Math_cpp_is_unary_operator(postfix_array[i] -> token_code)){
             MexpNode *node = Operator :: factory((mexprcpp_operators_t)postfix_array[i] -> token_code);
             MexpNode *leftChild = st.top();
@@ -53,8 +59,53 @@ MexpTree :: MexpTree(lex_data_t **postfix_array, int size){
             rightChild -> parent = node;
             st.push(node);
         }
-        this -> root = st.top();
-        st.pop();
-        assert(st.empty());
     }
+    this -> root = st.top();
+    st.pop();
+    assert(st.empty());
+}
+
+void InorderTraversal(MexpNode *node){
+    if(node == NULL) return;
+    if(node -> left){
+        InorderTraversal(node -> left);
+    }
+    // dynamic cast will check at runtime if node is of type Operator or not
+    Operator *op_node = dynamic_cast<Operator*>(node);
+    if(op_node){
+        cout << op_node -> name << " ";
+    }else{
+        Dtype *dt_node = dynamic_cast<Dtype*>(node);
+        if(dt_node){
+            switch (dt_node -> d_id)
+            {
+                case (int)MATH_CPP_INT:{
+                    Dtype_INT *int_node = dynamic_cast<Dtype_INT*>(dt_node);
+                    cout << int_node -> int_val << " ";
+                    break;
+                }
+                case (int)MATH_CPP_DOUBLE:{
+                    Dtype_DOUBLE *double_node = dynamic_cast<Dtype_DOUBLE*>(dt_node);
+                    cout << double_node -> double_val << " ";
+                    break;
+                }
+                case (int)MATH_CPP_STRING:{
+                    Dtype_STRING *string_node = dynamic_cast<Dtype_STRING*>(dt_node);
+                    cout << string_node -> string_val << " ";
+                    break;
+                }
+                default:{
+                    assert(false);
+                }
+            }
+        }else assert(false);
+    }
+    if(node -> right){
+        InorderTraversal(node -> right);
+    }
+}
+
+void MexpTree :: Inorder(MexpTree *tree){
+    MexpNode *node = tree -> root;
+    InorderTraversal(node);
 }
