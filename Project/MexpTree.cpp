@@ -36,7 +36,8 @@ MexpTree :: MexpTree(lex_data_t **postfix_array, int size){
                 continue;
         }
         if(Math_cpp_is_operand(postfix_array[i] -> token_code)){
-            MexpNode *node = Dtype :: factory((mexprcpp_dtypes_t)postfix_array[i] -> token_code);
+            string str = postfix_array[i] -> token_val;
+            MexpNode *node = Dtype :: factory((mexprcpp_dtypes_t)postfix_array[i] -> token_code, str);
             st.push(node);
         }else if(Math_cpp_is_unary_operator(postfix_array[i] -> token_code)){
             MexpNode *node = Operator :: factory((mexprcpp_operators_t)postfix_array[i] -> token_code);

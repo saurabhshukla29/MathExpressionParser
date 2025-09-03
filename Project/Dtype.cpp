@@ -90,15 +90,24 @@ void Dtype_STRING :: setValue(Dtype *dtype){
 
 // General Rule of defining function outside class
 // <return-type> <ClassName>::<FunctionName>(parameters) { ... }
-Dtype* Dtype :: factory(mexprcpp_dtypes_t d_id){
+Dtype* Dtype :: factory(mexprcpp_dtypes_t d_id, string val){
     switch (d_id)
     {
-    case (int)MATH_CPP_INT:
-        return new Dtype_INT();
-    case (int)MATH_CPP_DOUBLE:
-        return new Dtype_DOUBLE();
-    case (int)MATH_CPP_STRING:
-        return new Dtype_STRING();
+    case (int)MATH_CPP_INT:{
+        Dtype_INT *int_node = new Dtype_INT();
+        int_node -> int_val = stoi(val);
+        return int_node;
+    }
+    case (int)MATH_CPP_DOUBLE:{
+        Dtype_DOUBLE *double_node = new Dtype_DOUBLE();
+        double_node -> double_val = stod(val);
+        return double_node;
+    }
+    case (int)MATH_CPP_STRING:{
+        Dtype_STRING *string_node = new Dtype_STRING();
+        string_node -> string_val = val;
+        return string_node;
+    }
     default:
         assert(false); // should never reach here
         return nullptr;

@@ -12,7 +12,7 @@ class Dtype : public MexpNode {
     public:
     mexprcpp_dtypes_t d_id;   // Dtype ID
     virtual ~Dtype();
-    static Dtype * factory(mexprcpp_dtypes_t did);
+    static Dtype * factory(mexprcpp_dtypes_t did, std :: string val);
     virtual void setValue(void *value) = 0;
     virtual void setValue (Dtype *) = 0;
 };
