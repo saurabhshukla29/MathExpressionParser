@@ -16,6 +16,7 @@ class Operator : public MexpNode{
     std :: string name;
     bool isUnary;
     static Operator * factory(mexprcpp_operators_t op_id);
+    virtual MexpNode *clone();
 };
 
 // + operator
@@ -25,6 +26,7 @@ class OperatorPlus : public Operator{
     public:
     OperatorPlus();
     ~OperatorPlus();
+    virtual MexpNode *clone();
 };
 
 // - operator
@@ -34,6 +36,7 @@ class OperatorMinus : public Operator{
     public:
     OperatorMinus();
     ~OperatorMinus();
+    virtual MexpNode *clone();
 };
 
 // * operator
@@ -43,6 +46,7 @@ class OperatorMul : public Operator{
     public:
     OperatorMul();
     ~OperatorMul();
+    virtual MexpNode *clone();
 };
 
 // / operator
@@ -52,6 +56,7 @@ class OperatorDiv : public Operator{
     public:
     OperatorDiv();
     ~OperatorDiv();
+    virtual MexpNode *clone();
 };
 
 // == operator
@@ -61,6 +66,7 @@ class OperatorEq : public Operator{
     public:
     OperatorEq();
     ~OperatorEq();
+    virtual MexpNode *clone();
 };
 
 // != operator
@@ -70,6 +76,7 @@ class OperatorNeq : public Operator{
     public:
     OperatorNeq();
     ~OperatorNeq();
+    virtual MexpNode *clone();
 };
 
 // < operator
@@ -79,6 +86,7 @@ class OperatorLessthan : public Operator{
     public:
     OperatorLessthan();
     ~OperatorLessthan();
+    virtual MexpNode *clone();
 };
 
 // > operator
@@ -88,6 +96,7 @@ class OperatorGreaterthan : public Operator{
     public:
     OperatorGreaterthan();
     ~OperatorGreaterthan();
+    virtual MexpNode *clone();
 };
 
 // sqr operator
@@ -97,6 +106,7 @@ class OperatorSqr : public Operator{
     public:
     OperatorSqr();
     ~OperatorSqr();
+    virtual MexpNode *clone();
 };
 
 // sqrt operator
@@ -106,6 +116,7 @@ class OperatorSqrt : public Operator{
     public:
     OperatorSqrt();
     ~OperatorSqrt();
+    virtual MexpNode *clone();
 };
 
 // max operator
@@ -115,6 +126,7 @@ class OperatorMax : public Operator{
     public:
     OperatorMax();
     ~OperatorMax();
+    virtual MexpNode *clone();
 };
 
 // min operator
@@ -124,6 +136,7 @@ class OperatorMin : public Operator{
     public:
     OperatorMin();
     ~OperatorMin();
+    virtual MexpNode *clone();
 };
 
 #endif

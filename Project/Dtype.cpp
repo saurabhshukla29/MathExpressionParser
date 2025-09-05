@@ -12,6 +12,17 @@ Dtype :: ~Dtype(){
     // cout << "Dtype destructor called" << endl;
 }
 
+MexpNode* Dtype :: clone(){
+    Dtype *new_node = new Dtype();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // Concrete class now :
 
 // Integer Dtype
@@ -37,6 +48,17 @@ void Dtype_INT :: setValue(Dtype *dtype){
     this -> int_val = int_dtype -> int_val;
 }
 
+MexpNode* Dtype_INT :: clone(){
+    Dtype_INT *new_node = new Dtype_INT();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // Double Dtype
 Dtype_DOUBLE :: Dtype_DOUBLE(){
     this -> d_id = MATH_CPP_DOUBLE;
@@ -60,6 +82,17 @@ void Dtype_DOUBLE :: setValue(Dtype *dtype){
     this -> double_val = double_dtype -> double_val;
 }
 
+
+MexpNode* Dtype_DOUBLE :: clone(){
+    Dtype_DOUBLE *new_node = new Dtype_DOUBLE();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
 
 // String Dtype
 Dtype_STRING :: Dtype_STRING(){
@@ -87,6 +120,47 @@ void Dtype_STRING :: setValue(Dtype *dtype){
     this -> string_val = string_dtype -> string_val;
 }
 
+MexpNode* Dtype_STRING :: clone(){
+    Dtype_STRING *new_node = new Dtype_STRING();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
+
+// bool Dtype   
+Dtype_BOOL :: Dtype_BOOL(){
+    this -> d_id = MATH_CPP_BOOL;
+}
+
+Dtype_BOOL :: ~Dtype_BOOL(){
+    // cout << "Dtype_BOOL destructor called" << endl;
+}
+
+void Dtype_BOOL :: setValue(void *value){
+
+}
+
+void Dtype_BOOL :: setValue(Dtype *dtype){
+    Dtype_BOOL *bool_dtype = dynamic_cast<Dtype_BOOL *>(dtype);
+    this -> bool_val = bool_dtype -> bool_val;
+}
+
+
+MexpNode* Dtype_BOOL :: clone(){
+    Dtype_BOOL *new_node = new Dtype_BOOL();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
 
 // General Rule of defining function outside class
 // <return-type> <ClassName>::<FunctionName>(parameters) { ... }

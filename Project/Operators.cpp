@@ -12,6 +12,17 @@ Operator :: ~Operator(){
     // cout << "Operator Destructor called" << endl;
 }
 
+MexpNode* Operator :: clone(){
+    Operator *new_node = new Operator();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // Concrete class now :
 
 // + operator
@@ -25,6 +36,17 @@ OperatorPlus :: ~OperatorPlus(){
     // cout << "OperatorPlus Destructor called" << endl;
 }
 
+MexpNode* OperatorPlus :: clone(){
+    OperatorPlus *new_node = new OperatorPlus();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // - operator
 OperatorMinus :: OperatorMinus(){
     this -> op_id = MATH_CPP_MINUS;
@@ -34,6 +56,17 @@ OperatorMinus :: OperatorMinus(){
 
 OperatorMinus :: ~OperatorMinus(){
     // cout << "OperatorMinus Destructor called" << endl;
+}
+
+MexpNode* OperatorMinus :: clone(){
+    OperatorMinus *new_node = new OperatorMinus();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
 }
 
 // * operator
@@ -47,6 +80,17 @@ OperatorMul :: ~OperatorMul(){
     // cout << "OperatorMul Destructor called" << endl;
 }
 
+MexpNode* OperatorMul :: clone(){
+    OperatorMul *new_node = new OperatorMul();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // / operator
 OperatorDiv :: OperatorDiv(){
     this -> op_id = MATH_CPP_DIV;
@@ -56,6 +100,17 @@ OperatorDiv :: OperatorDiv(){
 
 OperatorDiv :: ~OperatorDiv(){
     // cout << "OperatorDiv Destructor called" << endl;
+}
+
+MexpNode* OperatorDiv :: clone(){
+    OperatorDiv *new_node = new OperatorDiv();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
 }
 
 // == operator
@@ -69,6 +124,17 @@ OperatorEq :: ~OperatorEq(){
     // cout << "OperatorEq Destructor called" << endl;
 }
 
+MexpNode* OperatorEq :: clone(){
+    OperatorEq *new_node = new OperatorEq();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // != operator
 OperatorNeq :: OperatorNeq(){
     this -> op_id = MATH_CPP_NEQ;
@@ -78,6 +144,17 @@ OperatorNeq :: OperatorNeq(){
 
 OperatorNeq :: ~OperatorNeq(){
     // cout << "OperatorNeq Destructor called" << endl;
+}
+
+MexpNode* OperatorNeq :: clone(){
+    OperatorNeq *new_node = new OperatorNeq();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
 }
 
 // < operator
@@ -91,6 +168,17 @@ OperatorLessthan :: ~OperatorLessthan(){
     // cout << "OperatorLessthan Destructor called" << endl;
 }
 
+MexpNode* OperatorLessthan :: clone(){
+    OperatorLessthan *new_node = new OperatorLessthan();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // > operator
 OperatorGreaterthan :: OperatorGreaterthan(){
     this -> op_id = MATH_CPP_GREATER_THAN;
@@ -100,6 +188,17 @@ OperatorGreaterthan :: OperatorGreaterthan(){
 
 OperatorGreaterthan :: ~OperatorGreaterthan(){
     // cout << "OperatorGreaterthan Destructor called" << endl;
+}
+
+MexpNode* OperatorGreaterthan :: clone(){
+    OperatorGreaterthan *new_node = new OperatorGreaterthan();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
 }
 
 // sqr operator
@@ -113,6 +212,17 @@ OperatorSqr :: ~OperatorSqr(){
     // cout << "OperatorSqr Destructor called" << endl;
 }
 
+MexpNode* OperatorSqr :: clone(){
+    OperatorSqr *new_node = new OperatorSqr();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // sqrt operator
 OperatorSqrt :: OperatorSqrt(){
     this -> op_id = MATH_CPP_SQRT;
@@ -122,6 +232,17 @@ OperatorSqrt :: OperatorSqrt(){
 
 OperatorSqrt :: ~OperatorSqrt(){
     // cout << "OperatorSqrt Destructor called" << endl;
+}
+
+MexpNode* OperatorSqrt :: clone(){
+    OperatorSqrt *new_node = new OperatorSqrt();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
 }
 
 // max operator
@@ -135,6 +256,17 @@ OperatorMax :: ~OperatorMax(){
     // cout << "OperatorMax Destructor called" << endl;
 }
 
+MexpNode* OperatorMax :: clone(){
+    OperatorMax *new_node = new OperatorMax();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
 // min operator
 OperatorMin :: OperatorMin(){
     this -> op_id = MATH_CPP_MIN;
@@ -144,6 +276,17 @@ OperatorMin :: OperatorMin(){
 
 OperatorMin :: ~OperatorMin(){
     // cout << "OperatorMin Destructor called" << endl;
+}
+
+MexpNode* OperatorMin :: clone(){
+    OperatorMin *new_node = new OperatorMin();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
 }
 
 Operator * Operator :: factory(mexprcpp_operators_t op_id){

@@ -351,7 +351,7 @@ int main(int argc, char **argv) {
 
 
 
-        parse_rc_t err = E();
+        parse_rc_t err = Q();
         int token_code = cyylex();
         if(token_code != PARSER_EOL){
             printf("Rejected : Entire String is not Mathematical Expression\n");

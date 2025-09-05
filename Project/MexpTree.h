@@ -20,6 +20,7 @@ class MexpNode{
     MexpNode *right;
     MexpNode *First_left;
     MexpNode *First_right;
+    virtual MexpNode *clone();
 };
 
 class MexpTree{

@@ -13,8 +13,9 @@ class Dtype : public MexpNode {
     mexprcpp_dtypes_t d_id;   // Dtype ID
     virtual ~Dtype();
     static Dtype * factory(mexprcpp_dtypes_t did, std :: string val);
-    virtual void setValue(void *value) = 0;
-    virtual void setValue (Dtype *) = 0;
+    virtual void setValue(void *value) ;
+    virtual void setValue (Dtype *) ;
+    virtual MexpNode *clone();
 };
 
 
@@ -30,6 +31,7 @@ class Dtype_INT : public Dtype{
     ~Dtype_INT();
     virtual void setValue(void *value) override;
     virtual void setValue (Dtype *) override;
+    virtual MexpNode *clone();
 };
 
 
@@ -45,6 +47,7 @@ class Dtype_DOUBLE : public Dtype{
     ~Dtype_DOUBLE();
     virtual void setValue(void *value) override;
     virtual void setValue (Dtype *) override;
+    virtual MexpNode *clone();
 };
 
 
@@ -59,6 +62,22 @@ class Dtype_STRING : public Dtype{
     ~Dtype_STRING();
     virtual void setValue(void *value) override;
     virtual void setValue (Dtype *) override;
+    virtual MexpNode *clone();
 };
+
+// bool Dtype
+class Dtype_BOOL : public Dtype{
+    
+    private:
+    protected:
+    public:
+    bool bool_val;
+    Dtype_BOOL();
+    ~Dtype_BOOL();
+    virtual void setValue(void *value) override;
+    virtual void setValue (Dtype *) override;
+    virtual MexpNode *clone();
+};
+
 
 #endif

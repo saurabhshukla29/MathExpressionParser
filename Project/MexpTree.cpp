@@ -17,6 +17,17 @@ MexpNode :: ~MexpNode(){
     // cout << "MexpNode Destructor called" << endl;
 }
 
+MexpNode* MexpNode :: clone(){
+    MexpNode *new_node = new MexpNode();
+    *new_node = *this;
+    new_node -> parent = NULL;
+    new_node -> left = NULL;
+    new_node -> right = NULL;
+    new_node -> First_left = NULL;
+    new_node -> First_right = NULL;
+    return new_node;
+}
+
 MexpTree :: MexpTree(){
     this -> root = NULL;
     this -> First_head = NULL;
