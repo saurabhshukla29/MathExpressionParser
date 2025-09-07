@@ -12,6 +12,7 @@ Operator :: ~Operator(){
     // cout << "Operator Destructor called" << endl;
 }
 
+/*
 MexpNode* Operator :: clone(){
     Operator *new_node = new Operator();
     *new_node = *this;
@@ -22,6 +23,8 @@ MexpNode* Operator :: clone(){
     this -> First_right = NULL;
     return new_node;
 }
+*/
+
 
 // Concrete class now :
 
@@ -47,6 +50,60 @@ MexpNode* OperatorPlus :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t OperatorPlus :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT : 
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_INT;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_STRING;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DTYPE_WILDCRAD;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        default : 
+        return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
 // - operator
 OperatorMinus :: OperatorMinus(){
     this -> op_id = MATH_CPP_MINUS;
@@ -67,6 +124,60 @@ MexpNode* OperatorMinus :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t OperatorMinus :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT : 
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_INT;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_STRING;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DTYPE_WILDCRAD;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        default : 
+        return MATH_CPP_DTYPE_INVALID;
+    }
 }
 
 // * operator
@@ -91,6 +202,48 @@ MexpNode* OperatorMul :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t OperatorMul :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT : 
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_INT;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DTYPE_WILDCRAD;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        default : 
+        return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
 // / operator
 OperatorDiv :: OperatorDiv(){
     this -> op_id = MATH_CPP_DIV;
@@ -111,6 +264,46 @@ MexpNode* OperatorDiv :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t OperatorDiv :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT : 
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DTYPE_WILDCRAD;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        default : 
+        return MATH_CPP_DTYPE_INVALID;
+    }
 }
 
 // == operator
@@ -135,6 +328,45 @@ MexpNode* OperatorEq :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t OperatorEq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        default :
+        return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
 // != operator
 OperatorNeq :: OperatorNeq(){
     this -> op_id = MATH_CPP_NEQ;
@@ -155,6 +387,45 @@ MexpNode* OperatorNeq :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t OperatorNeq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        default :
+        return MATH_CPP_DTYPE_INVALID;
+    }
 }
 
 // < operator
@@ -179,6 +450,45 @@ MexpNode* OperatorLessthan :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t OperatorLessthan :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        default :
+        return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
 // > operator
 OperatorGreaterthan :: OperatorGreaterthan(){
     this -> op_id = MATH_CPP_GREATER_THAN;
@@ -199,6 +509,45 @@ MexpNode* OperatorGreaterthan :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t OperatorGreaterthan :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                return MATH_CPP_BOOL;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        default :
+        return MATH_CPP_DTYPE_INVALID;
+    }
 }
 
 // sqr operator
@@ -223,6 +572,22 @@ MexpNode* OperatorSqr :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t OperatorSqr :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT :
+        return MATH_CPP_INT;
+        break;
+        case MATH_CPP_DOUBLE :
+        return MATH_CPP_DOUBLE;
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+        return MATH_CPP_DTYPE_WILDCRAD;
+        break;
+        default :
+        return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
 // sqrt operator
 OperatorSqrt :: OperatorSqrt(){
     this -> op_id = MATH_CPP_SQRT;
@@ -243,6 +608,22 @@ MexpNode* OperatorSqrt :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t OperatorSqrt :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT :
+        return MATH_CPP_DOUBLE;
+        break;
+        case MATH_CPP_DOUBLE :
+        return MATH_CPP_DOUBLE;
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+        return MATH_CPP_DOUBLE;
+        break;
+        default :
+        return MATH_CPP_DTYPE_INVALID;
+    }
 }
 
 // max operator
@@ -267,6 +648,60 @@ MexpNode* OperatorMax :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t OperatorMax :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT : 
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_INT;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_STRING;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DTYPE_WILDCRAD;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        default : 
+        return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
 // min operator
 OperatorMin :: OperatorMin(){
     this -> op_id = MATH_CPP_MIN;
@@ -287,6 +722,60 @@ MexpNode* OperatorMin :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t OperatorMin :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT : 
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_INT;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(d_id2){
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_STRING;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_STRING :
+                return MATH_CPP_STRING;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DTYPE_WILDCRAD;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        default : 
+        return MATH_CPP_DTYPE_INVALID;
+    }
 }
 
 Operator * Operator :: factory(mexprcpp_operators_t op_id){

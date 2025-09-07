@@ -12,6 +12,7 @@ Dtype :: ~Dtype(){
     // cout << "Dtype destructor called" << endl;
 }
 
+/*
 MexpNode* Dtype :: clone(){
     Dtype *new_node = new Dtype();
     *new_node = *this;
@@ -22,6 +23,7 @@ MexpNode* Dtype :: clone(){
     this -> First_right = NULL;
     return new_node;
 }
+*/
 
 // Concrete class now :
 
@@ -59,6 +61,10 @@ MexpNode* Dtype_INT :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t Dtype_INT :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    return MATH_CPP_INT;
+}
+
 // Double Dtype
 Dtype_DOUBLE :: Dtype_DOUBLE(){
     this -> d_id = MATH_CPP_DOUBLE;
@@ -92,6 +98,10 @@ MexpNode* Dtype_DOUBLE :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t Dtype_DOUBLE :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    return MATH_CPP_DOUBLE;
 }
 
 // String Dtype
@@ -131,6 +141,9 @@ MexpNode* Dtype_STRING :: clone(){
     return new_node;
 }
 
+mexprcpp_dtypes_t Dtype_STRING :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    return MATH_CPP_STRING;
+}
 
 // bool Dtype   
 Dtype_BOOL :: Dtype_BOOL(){
@@ -160,6 +173,10 @@ MexpNode* Dtype_BOOL :: clone(){
     this -> First_left = NULL;
     this -> First_right = NULL;
     return new_node;
+}
+
+mexprcpp_dtypes_t Dtype_BOOL :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    return MATH_CPP_BOOL;
 }
 
 // General Rule of defining function outside class

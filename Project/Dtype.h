@@ -13,9 +13,10 @@ class Dtype : public MexpNode {
     mexprcpp_dtypes_t d_id;   // Dtype ID
     virtual ~Dtype();
     static Dtype * factory(mexprcpp_dtypes_t did, std :: string val);
-    virtual void setValue(void *value) ;
-    virtual void setValue (Dtype *) ;
-    virtual MexpNode *clone();
+    virtual void setValue(void *value) = 0;
+    virtual void setValue (Dtype *) = 0;
+    virtual MexpNode *clone() = 0;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) = 0;
 };
 
 
@@ -31,7 +32,8 @@ class Dtype_INT : public Dtype{
     ~Dtype_INT();
     virtual void setValue(void *value) override;
     virtual void setValue (Dtype *) override;
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 
@@ -47,7 +49,8 @@ class Dtype_DOUBLE : public Dtype{
     ~Dtype_DOUBLE();
     virtual void setValue(void *value) override;
     virtual void setValue (Dtype *) override;
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 
@@ -62,7 +65,8 @@ class Dtype_STRING : public Dtype{
     ~Dtype_STRING();
     virtual void setValue(void *value) override;
     virtual void setValue (Dtype *) override;
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // bool Dtype
@@ -76,7 +80,8 @@ class Dtype_BOOL : public Dtype{
     ~Dtype_BOOL();
     virtual void setValue(void *value) override;
     virtual void setValue (Dtype *) override;
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 

@@ -16,7 +16,8 @@ class Operator : public MexpNode{
     std :: string name;
     bool isUnary;
     static Operator * factory(mexprcpp_operators_t op_id);
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() = 0;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) = 0;
 };
 
 // + operator
@@ -26,7 +27,8 @@ class OperatorPlus : public Operator{
     public:
     OperatorPlus();
     ~OperatorPlus();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // - operator
@@ -36,7 +38,8 @@ class OperatorMinus : public Operator{
     public:
     OperatorMinus();
     ~OperatorMinus();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // * operator
@@ -46,7 +49,8 @@ class OperatorMul : public Operator{
     public:
     OperatorMul();
     ~OperatorMul();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // / operator
@@ -56,7 +60,8 @@ class OperatorDiv : public Operator{
     public:
     OperatorDiv();
     ~OperatorDiv();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // == operator
@@ -66,7 +71,8 @@ class OperatorEq : public Operator{
     public:
     OperatorEq();
     ~OperatorEq();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // != operator
@@ -76,7 +82,8 @@ class OperatorNeq : public Operator{
     public:
     OperatorNeq();
     ~OperatorNeq();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // < operator
@@ -86,7 +93,8 @@ class OperatorLessthan : public Operator{
     public:
     OperatorLessthan();
     ~OperatorLessthan();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // > operator
@@ -96,7 +104,8 @@ class OperatorGreaterthan : public Operator{
     public:
     OperatorGreaterthan();
     ~OperatorGreaterthan();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // sqr operator
@@ -106,7 +115,8 @@ class OperatorSqr : public Operator{
     public:
     OperatorSqr();
     ~OperatorSqr();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // sqrt operator
@@ -116,7 +126,8 @@ class OperatorSqrt : public Operator{
     public:
     OperatorSqrt();
     ~OperatorSqrt();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // max operator
@@ -126,7 +137,8 @@ class OperatorMax : public Operator{
     public:
     OperatorMax();
     ~OperatorMax();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 // min operator
@@ -136,7 +148,8 @@ class OperatorMin : public Operator{
     public:
     OperatorMin();
     ~OperatorMin();
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
 };
 
 #endif

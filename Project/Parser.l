@@ -383,6 +383,11 @@ int main(int argc, char **argv) {
                 printf("Tree \n");
                 MexpTree :: Inorder(Tree);
                 printf("\n");
+                if(Tree -> validate(Tree -> root)){
+                    printf("Expression Tree is Valid\n");
+                }else{
+                    printf("Expression Tree is not Valid\n");
+                }
             }
         }
         Parser_stack_reset();

@@ -62,13 +62,14 @@ extern "C" lex_data_t** convertInfixToPostfix(lex_data_t *infix, int size_in, in
 /*
 int main(){
     lex_data_t infix[] = {
-        {MATH_CPP_VARIABLE, 1, "a"},
+        {MATH_CPP_INT, 1, "1"},
         {PARSER_WHITE_SPACE, 1, " "},
         {MATH_CPP_PLUS, 1, "+"},
         {PARSER_WHITE_SPACE, 1, " "},
-        {MATH_CPP_VARIABLE, 1, "b"},
-        {MATH_CPP_MUL, 1, "*"},
-        {MATH_CPP_VARIABLE, 1, "c"}
+        {MATH_CPP_SQR, 1, "sqr"},
+        {MATH_CPP_BRACKET_START, 1, "("},
+        {MATH_CPP_INT, 1, "2"},
+        {MATH_CPP_BRACKET_END, 1, ")"}
     };
     int size_out = 0;
     lex_data_t **postfixArray = convertInfixToPostfix(infix, sizeof(infix)/sizeof(infix[0]),&size_out);

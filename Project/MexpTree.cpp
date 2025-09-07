@@ -17,6 +17,8 @@ MexpNode :: ~MexpNode(){
     // cout << "MexpNode Destructor called" << endl;
 }
 
+
+/*
 MexpNode* MexpNode :: clone(){
     MexpNode *new_node = new MexpNode();
     *new_node = *this;
@@ -27,6 +29,7 @@ MexpNode* MexpNode :: clone(){
     new_node -> First_right = NULL;
     return new_node;
 }
+*/
 
 MexpTree :: MexpTree(){
     this -> root = NULL;
@@ -121,3 +124,33 @@ void MexpTree :: Inorder(MexpTree *tree){
     MexpNode *node = tree -> root;
     InorderTraversal(node);
 }
+
+mexprcpp_dtypes_t MexpTree :: internalValidate(MexpNode * root){
+    if(!root){
+        return MATH_CPP_DTYPE_INVALID;
+    }
+
+    mexprcpp_dtypes_t leftChild = internalValidate(root -> left);
+    mexprcpp_dtypes_t rightChild = internalValidate(root -> right);
+    // Leaf Nodes
+    if(!root -> left and !root -> right){
+        return root -> result(MATH_CPP_DTYPE_INVALID, MATH_CPP_DTYPE_INVALID);
+    }
+
+    // unary operators
+    if(root -> left and !root -> right){
+        return root -> result(leftChild, MATH_CPP_DTYPE_INVALID);
+    }
+
+    // binary operators
+    return root -> result(leftChild, rightChild);
+}
+
+bool MexpTree :: validate(MexpNode * root){
+    mexprcpp_dtypes_t res = internalValidate(root);
+    if(res != MATH_CPP_DTYPE_INVALID){
+        return true;
+    }
+    return false;
+}
+

@@ -20,12 +20,14 @@ class MexpNode{
     MexpNode *right;
     MexpNode *First_left;
     MexpNode *First_right;
-    virtual MexpNode *clone();
+    virtual MexpNode *clone() = 0; // pure virtual function makes this class abstract. Derived class must override this method
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) = 0;
 };
 
 class MexpTree{
 
     private:
+    mexprcpp_dtypes_t internalValidate(MexpNode * root);
     protected:
     public:
     MexpNode *root;
@@ -34,6 +36,7 @@ class MexpTree{
     MexpTree(lex_data_t **postfix_array, int size); // constructor
     static void Inorder( MexpTree *tree );
     virtual ~MexpTree();
+    bool validate(MexpNode * root);
 };
 
 #endif
