@@ -294,7 +294,8 @@ mexprcpp_dtypes_t OperatorDiv :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtype
         break;
         case MATH_CPP_DTYPE_WILDCRAD :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
                 return MATH_CPP_DOUBLE;
                 case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_DTYPE_WILDCRAD;
@@ -332,7 +333,9 @@ mexprcpp_dtypes_t OperatorEq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes
     switch(d_id1){
         case MATH_CPP_INT :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -340,7 +343,9 @@ mexprcpp_dtypes_t OperatorEq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes
         break;
         case MATH_CPP_DOUBLE :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -356,7 +361,9 @@ mexprcpp_dtypes_t OperatorEq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes
         break;
         case MATH_CPP_DTYPE_WILDCRAD :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -393,7 +400,9 @@ mexprcpp_dtypes_t OperatorNeq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtype
     switch(d_id1){
         case MATH_CPP_INT :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -401,7 +410,9 @@ mexprcpp_dtypes_t OperatorNeq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtype
         break;
         case MATH_CPP_DOUBLE :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -417,7 +428,9 @@ mexprcpp_dtypes_t OperatorNeq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtype
         break;
         case MATH_CPP_DTYPE_WILDCRAD :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -454,7 +467,9 @@ mexprcpp_dtypes_t OperatorLessthan :: result (mexprcpp_dtypes_t d_id1, mexprcpp_
     switch(d_id1){
         case MATH_CPP_INT :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -462,7 +477,9 @@ mexprcpp_dtypes_t OperatorLessthan :: result (mexprcpp_dtypes_t d_id1, mexprcpp_
         break;
         case MATH_CPP_DOUBLE :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -478,7 +495,9 @@ mexprcpp_dtypes_t OperatorLessthan :: result (mexprcpp_dtypes_t d_id1, mexprcpp_
         break;
         case MATH_CPP_DTYPE_WILDCRAD :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -515,7 +534,9 @@ mexprcpp_dtypes_t OperatorGreaterthan :: result (mexprcpp_dtypes_t d_id1, mexprc
     switch(d_id1){
         case MATH_CPP_INT :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -523,7 +544,9 @@ mexprcpp_dtypes_t OperatorGreaterthan :: result (mexprcpp_dtypes_t d_id1, mexprc
         break;
         case MATH_CPP_DOUBLE :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_DTYPE_WILDCRAD :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
@@ -539,7 +562,9 @@ mexprcpp_dtypes_t OperatorGreaterthan :: result (mexprcpp_dtypes_t d_id1, mexprc
         break;
         case MATH_CPP_DTYPE_WILDCRAD :
             switch(d_id2){
-                case MATH_CPP_INT or MATH_CPP_DOUBLE or MATH_CPP_STRING :
+                case MATH_CPP_INT :
+                case MATH_CPP_DOUBLE :
+                case MATH_CPP_DTYPE_WILDCRAD :
                 return MATH_CPP_BOOL;
                 default :
                 return MATH_CPP_DTYPE_INVALID;
