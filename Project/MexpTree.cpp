@@ -154,3 +154,33 @@ bool MexpTree :: validate(MexpNode * root){
     return false;
 }
 
+Dtype * MexpTree :: internalEvaluate(MexpNode * root){
+    if(!root) return NULL;
+    Dtype * leftChild = internalEvaluate(root -> left);
+    Dtype * rightChild = internalEvaluate(root -> right);
+
+    // Leaf Nodes
+    if(!root -> left and !root -> right){
+        Dtype * res = root -> compute(NULL, NULL);
+        return res;
+    }
+
+    // unary operators
+    if(root -> left and !root -> right){
+        Dtype * res = root -> compute(leftChild, NULL);
+        delete leftChild;
+        return res;
+    }
+
+    // binary operators
+    Dtype * res = root -> compute(leftChild, rightChild);
+    delete leftChild;
+    delete rightChild;
+    return res;
+}
+
+
+Dtype * MexpTree :: evaluate(MexpNode * root){
+    return internalEvaluate(root);
+}
+

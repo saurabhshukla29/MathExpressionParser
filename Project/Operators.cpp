@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #include "Operators.h"
+#include "Dtype.h"
 using namespace std;
 
 Operator :: Operator(){
@@ -104,6 +105,66 @@ mexprcpp_dtypes_t OperatorPlus :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtyp
     }
 }
 
+Dtype *OperatorPlus :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_INT * resInt = new Dtype_INT(0);
+                    resInt -> int_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        + (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resInt;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            + (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            + (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resDouble;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            + (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_STRING :
+                {
+                    Dtype_STRING * resString = new Dtype_STRING();
+                    resString -> string_val = (dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
+                                            + (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val;
+                    return resString;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
+    }
+}
+
 // - operator
 OperatorMinus :: OperatorMinus(){
     this -> op_id = MATH_CPP_MINUS;
@@ -180,6 +241,53 @@ mexprcpp_dtypes_t OperatorMinus :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dty
     }
 }
 
+Dtype *OperatorMinus :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_INT * resInt = new Dtype_INT(0);
+                    resInt -> int_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        - (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resInt;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            - (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            - (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resDouble;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            - (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
+    }
+}
+
 // * operator
 OperatorMul :: OperatorMul(){
     this -> op_id = MATH_CPP_MUL;
@@ -244,6 +352,53 @@ mexprcpp_dtypes_t OperatorMul :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtype
     }
 }
 
+Dtype *OperatorMul :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_INT * resInt = new Dtype_INT(0);
+                    resInt -> int_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        - (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resInt;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            * (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            * (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resDouble;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            * (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
+    }
+}
+
 // / operator
 OperatorDiv :: OperatorDiv(){
     this -> op_id = MATH_CPP_DIV;
@@ -304,6 +459,53 @@ mexprcpp_dtypes_t OperatorDiv :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtype
             }
         default : 
         return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
+Dtype *OperatorDiv :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        / (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resDouble;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            / (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            / (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resDouble;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            / (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
     }
 }
 
@@ -374,6 +576,66 @@ mexprcpp_dtypes_t OperatorEq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes
     }
 }
 
+Dtype *OperatorEq :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        == (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            == (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            == (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            == (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_STRING :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
+                                        == (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
+    }
+}
+
 // != operator
 OperatorNeq :: OperatorNeq(){
     this -> op_id = MATH_CPP_NEQ;
@@ -438,6 +700,66 @@ mexprcpp_dtypes_t OperatorNeq :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtype
         break;
         default :
         return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
+Dtype *OperatorNeq :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        != (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            != (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            != (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            != (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_STRING :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
+                                        != (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
     }
 }
 
@@ -508,6 +830,66 @@ mexprcpp_dtypes_t OperatorLessthan :: result (mexprcpp_dtypes_t d_id1, mexprcpp_
     }
 }
 
+Dtype *OperatorLessthan :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        < (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            < (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            < (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            < (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_STRING :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
+                                        < (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
+    }
+}
+
 // > operator
 OperatorGreaterthan :: OperatorGreaterthan(){
     this -> op_id = MATH_CPP_GREATER_THAN;
@@ -562,6 +944,7 @@ mexprcpp_dtypes_t OperatorGreaterthan :: result (mexprcpp_dtypes_t d_id1, mexprc
         break;
         case MATH_CPP_DTYPE_WILDCRAD :
             switch(d_id2){
+                // We cannot write or in switch 
                 case MATH_CPP_INT :
                 case MATH_CPP_DOUBLE :
                 case MATH_CPP_DTYPE_WILDCRAD :
@@ -572,6 +955,66 @@ mexprcpp_dtypes_t OperatorGreaterthan :: result (mexprcpp_dtypes_t d_id1, mexprc
         break;
         default :
         return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
+Dtype *OperatorGreaterthan :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        > (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            > (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            > (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val;
+                    return resBool;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            > (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_STRING :
+                {
+                    Dtype_BOOL * resBool = new Dtype_BOOL();
+                    resBool -> bool_val = (dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
+                                        > (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val;
+                    return resBool;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
     }
 }
 
@@ -613,6 +1056,25 @@ mexprcpp_dtypes_t OperatorSqr :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtype
     }
 }
 
+Dtype *OperatorSqr :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            Dtype_INT * resInt = new Dtype_INT(0);
+            resInt -> int_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                * (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val;
+            return resInt;
+        break;
+        case MATH_CPP_DOUBLE :
+            Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+            resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                    * (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val;
+            return resDouble;
+        break;
+        default :
+        return NULL;
+    }
+}
+
 // sqrt operator
 OperatorSqrt :: OperatorSqrt(){
     this -> op_id = MATH_CPP_SQRT;
@@ -648,6 +1110,23 @@ mexprcpp_dtypes_t OperatorSqrt :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtyp
         break;
         default :
         return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
+Dtype *OperatorSqrt :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+            resDouble -> double_val = sqrt((double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val);
+            return resDouble;
+        break;
+        case MATH_CPP_DOUBLE :
+            Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+            resDouble -> double_val = sqrt((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val);
+            return resDouble;
+        break;
+        default :
+        return NULL;
     }
 }
 
@@ -727,6 +1206,66 @@ mexprcpp_dtypes_t OperatorMax :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtype
     }
 }
 
+Dtype *OperatorMax :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_INT * resInt = new Dtype_INT(0);
+                    resInt -> int_val = max((dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        , (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val);
+                    return resInt;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = max((double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            , (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val);
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = max((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            , (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val);
+                    return resDouble;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = max((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            , (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val);
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_STRING :
+                {
+                    Dtype_STRING * resString = new Dtype_STRING();
+                    resString -> string_val = max((dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
+                                            , (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val);
+                    return resString;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
+    }
+}
+
 // min operator
 OperatorMin :: OperatorMin(){
     this -> op_id = MATH_CPP_MIN;
@@ -800,6 +1339,66 @@ mexprcpp_dtypes_t OperatorMin :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtype
             }
         default : 
         return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
+Dtype *OperatorMax :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_INT * resInt = new Dtype_INT(0);
+                    resInt -> int_val = min((dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        , (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val);
+                    return resInt;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = min((double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            , (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val);
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = min((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            , (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val);
+                    return resDouble;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = min((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            , (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val);
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_STRING :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_STRING :
+                {
+                    Dtype_STRING * resString = new Dtype_STRING();
+                    resString -> string_val = min((dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
+                                            , (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val);
+                    return resString;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
     }
 }
 

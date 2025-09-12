@@ -5,6 +5,7 @@
 #include<stdbool.h>
 #include "MexprEnums.h"
 #include "MexpTree.h"
+#include "Dtype.h"
 
 class Operator : public MexpNode{
     private:
@@ -18,6 +19,7 @@ class Operator : public MexpNode{
     static Operator * factory(mexprcpp_operators_t op_id);
     virtual MexpNode *clone() = 0;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) = 0;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) = 0;
 };
 
 // + operator
@@ -29,6 +31,7 @@ class OperatorPlus : public Operator{
     ~OperatorPlus();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // - operator
@@ -40,6 +43,7 @@ class OperatorMinus : public Operator{
     ~OperatorMinus();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // * operator
@@ -51,6 +55,7 @@ class OperatorMul : public Operator{
     ~OperatorMul();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // / operator
@@ -62,6 +67,7 @@ class OperatorDiv : public Operator{
     ~OperatorDiv();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // == operator
@@ -73,6 +79,7 @@ class OperatorEq : public Operator{
     ~OperatorEq();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // != operator
@@ -84,6 +91,7 @@ class OperatorNeq : public Operator{
     ~OperatorNeq();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // < operator
@@ -95,6 +103,7 @@ class OperatorLessthan : public Operator{
     ~OperatorLessthan();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // > operator
@@ -106,6 +115,7 @@ class OperatorGreaterthan : public Operator{
     ~OperatorGreaterthan();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // sqr operator
@@ -117,6 +127,7 @@ class OperatorSqr : public Operator{
     ~OperatorSqr();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // sqrt operator
@@ -128,6 +139,7 @@ class OperatorSqrt : public Operator{
     ~OperatorSqrt();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // max operator
@@ -139,6 +151,7 @@ class OperatorMax : public Operator{
     ~OperatorMax();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // min operator
@@ -150,6 +163,7 @@ class OperatorMin : public Operator{
     ~OperatorMin();
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 #endif

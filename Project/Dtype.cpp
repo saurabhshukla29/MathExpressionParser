@@ -65,6 +65,10 @@ mexprcpp_dtypes_t Dtype_INT :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_
     return MATH_CPP_INT;
 }
 
+Dtype *  Dtype_INT :: compute(Dtype *dtype1 , Dtype *dtype2){
+    return dynamic_cast<Dtype *>(clone());
+}
+
 // Double Dtype
 Dtype_DOUBLE :: Dtype_DOUBLE(){
     this -> d_id = MATH_CPP_DOUBLE;
@@ -102,6 +106,10 @@ MexpNode* Dtype_DOUBLE :: clone(){
 
 mexprcpp_dtypes_t Dtype_DOUBLE :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
     return MATH_CPP_DOUBLE;
+}
+
+Dtype *  Dtype_DOUBLE :: compute(Dtype *dtype1 , Dtype *dtype2){
+    return dynamic_cast<Dtype *>(clone());
 }
 
 // String Dtype
@@ -145,6 +153,10 @@ mexprcpp_dtypes_t Dtype_STRING :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtyp
     return MATH_CPP_STRING;
 }
 
+Dtype *  Dtype_STRING :: compute(Dtype *dtype1 , Dtype *dtype2){
+    return dynamic_cast<Dtype *>(clone());
+}
+
 // bool Dtype   
 Dtype_BOOL :: Dtype_BOOL(){
     this -> d_id = MATH_CPP_BOOL;
@@ -177,6 +189,10 @@ MexpNode* Dtype_BOOL :: clone(){
 
 mexprcpp_dtypes_t Dtype_BOOL :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
     return MATH_CPP_BOOL;
+}
+
+Dtype *  Dtype_BOOL :: compute(Dtype *dtype1 , Dtype *dtype2){
+    return dynamic_cast<Dtype *>(clone());
 }
 
 // General Rule of defining function outside class

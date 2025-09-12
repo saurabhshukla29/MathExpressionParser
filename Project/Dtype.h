@@ -12,11 +12,16 @@ class Dtype : public MexpNode {
     public:
     mexprcpp_dtypes_t d_id;   // Dtype ID
     virtual ~Dtype();
+    // This is a factory method which will return the Dtype object based on the did passed
     static Dtype * factory(mexprcpp_dtypes_t did, std :: string val);
     virtual void setValue(void *value) = 0;
     virtual void setValue (Dtype *) = 0;
+    // This is a clone method which will return a copy of the current object
     virtual MexpNode *clone() = 0;
+    // This method will return the resultant dtype id after applying an operator on two dtypes
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) = 0;
+    // This method will compute the value after applying an operator on two dtypes
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) = 0;
 };
 
 
@@ -34,6 +39,7 @@ class Dtype_INT : public Dtype{
     virtual void setValue (Dtype *) override;
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 
@@ -51,6 +57,8 @@ class Dtype_DOUBLE : public Dtype{
     virtual void setValue (Dtype *) override;
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
+    
 };
 
 
@@ -67,6 +75,7 @@ class Dtype_STRING : public Dtype{
     virtual void setValue (Dtype *) override;
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 // bool Dtype
@@ -82,6 +91,7 @@ class Dtype_BOOL : public Dtype{
     virtual void setValue (Dtype *) override;
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
 
