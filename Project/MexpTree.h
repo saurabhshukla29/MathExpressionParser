@@ -7,6 +7,7 @@
 #include "MexprEnums.h"
 #include "ParserExport.h"
 
+class Dtype; // forward declaration
 class MexpNode{
     private:
     protected:

@@ -152,8 +152,11 @@ Dtype *OperatorPlus :: compute(Dtype *dtype1 , Dtype * dtype2){
                 case MATH_CPP_STRING :
                 {
                     Dtype_STRING * resString = new Dtype_STRING();
-                    resString -> string_val = (dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val 
-                                            + (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val;
+                    string str1 = (dynamic_cast< Dtype_STRING* >(dtype1)) -> string_val;
+                    string str2 = (dynamic_cast< Dtype_STRING* >(dtype2)) -> string_val;
+                    str1.erase(remove(str1.begin(), str1.end(), '\"'), str1.end());
+                    str2.erase(remove(str2.begin(), str2.end(), '\"'), str2.end());
+                    resString -> string_val = "\"" + str1 + str2 + "\"";
                     return resString;
                 }
                 default :
@@ -1059,16 +1062,20 @@ mexprcpp_dtypes_t OperatorSqr :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtype
 Dtype *OperatorSqr :: compute(Dtype *dtype1 , Dtype * dtype2){
     switch(dtype1 -> d_id){
         case MATH_CPP_INT :
+        {
             Dtype_INT * resInt = new Dtype_INT(0);
             resInt -> int_val = (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
                                 * (dynamic_cast< Dtype_INT* >(dtype1)) -> int_val;
             return resInt;
+        }
         break;
         case MATH_CPP_DOUBLE :
+        {
             Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
             resDouble -> double_val = (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
                                     * (dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val;
             return resDouble;
+        }
         break;
         default :
         return NULL;
@@ -1116,14 +1123,18 @@ mexprcpp_dtypes_t OperatorSqrt :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtyp
 Dtype *OperatorSqrt :: compute(Dtype *dtype1 , Dtype * dtype2){
     switch(dtype1 -> d_id){
         case MATH_CPP_INT :
+        {
             Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
             resDouble -> double_val = sqrt((double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val);
             return resDouble;
+        }
         break;
         case MATH_CPP_DOUBLE :
+        {
             Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
             resDouble -> double_val = sqrt((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val);
             return resDouble;
+        }
         break;
         default :
         return NULL;
@@ -1342,7 +1353,7 @@ mexprcpp_dtypes_t OperatorMin :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtype
     }
 }
 
-Dtype *OperatorMax :: compute(Dtype *dtype1 , Dtype * dtype2){
+Dtype *OperatorMin :: compute(Dtype *dtype1 , Dtype * dtype2){
     switch(dtype1 -> d_id){
         case MATH_CPP_INT :
             switch(dtype2 -> d_id){
@@ -1402,6 +1413,109 @@ Dtype *OperatorMax :: compute(Dtype *dtype1 , Dtype * dtype2){
     }
 }
 
+// Pow operator
+OperatorPow :: OperatorPow(){
+    this -> op_id = MATH_CPP_POW;
+    this -> name = "pow";
+    this -> isUnary = false;
+}
+
+OperatorPow :: ~OperatorPow(){
+    // cout << "OperatorPow Destructor called" << endl;
+}
+
+MexpNode* OperatorPow :: clone(){
+    OperatorPow *new_node = new OperatorPow();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
+mexprcpp_dtypes_t OperatorPow :: result (mexprcpp_dtypes_t d_id1, mexprcpp_dtypes_t d_id2){
+    switch(d_id1){
+        case MATH_CPP_INT :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_INT;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_INT;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(d_id2){
+                case MATH_CPP_INT :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DOUBLE :
+                return MATH_CPP_DOUBLE;
+                case MATH_CPP_DTYPE_WILDCRAD :
+                return MATH_CPP_DOUBLE;
+                default :
+                return MATH_CPP_DTYPE_INVALID;
+            }
+        break;
+        case MATH_CPP_DTYPE_WILDCRAD :
+        return MATH_CPP_DTYPE_WILDCRAD;
+        break;
+        default :
+        return MATH_CPP_DTYPE_INVALID;
+    }
+}
+
+Dtype *OperatorPow :: compute(Dtype *dtype1 , Dtype * dtype2){
+    switch(dtype1 -> d_id){
+        case MATH_CPP_INT :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_INT * resInt = new Dtype_INT(0);
+                    resInt -> int_val = (int)pow((dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                        , (dynamic_cast< Dtype_INT* >(dtype2)) -> int_val);
+                    return resInt;
+                }
+                case MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = pow((double)(dynamic_cast< Dtype_INT* >(dtype1)) -> int_val 
+                                            , (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val);
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        case MATH_CPP_DOUBLE :
+            switch(dtype2 -> d_id){
+                case MATH_CPP_INT :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = pow((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            , (double)(dynamic_cast< Dtype_INT* >(dtype2)) -> int_val);
+                    return resDouble;
+                }
+                case  MATH_CPP_DOUBLE :
+                {
+                    Dtype_DOUBLE * resDouble = new Dtype_DOUBLE(0.0);
+                    resDouble -> double_val = pow((dynamic_cast< Dtype_DOUBLE* >(dtype1)) -> double_val 
+                                            , (dynamic_cast< Dtype_DOUBLE* >(dtype2)) -> double_val);
+                    return resDouble;
+                }
+                default :
+                    return NULL;
+            }
+        break;
+        default :
+        return NULL;
+    }
+}
+
 Operator * Operator :: factory(mexprcpp_operators_t op_id){
     switch (op_id)
     {
@@ -1429,6 +1543,8 @@ Operator * Operator :: factory(mexprcpp_operators_t op_id){
         return new OperatorMax();
     case (int)MATH_CPP_MIN:
         return new OperatorMin();
+    case (int)MATH_CPP_POW:
+        return new OperatorPow();
     default:
         assert(false); // should never reach here
         return nullptr;

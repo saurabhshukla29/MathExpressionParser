@@ -80,39 +80,50 @@ Math_cpp_operator_precedence (int token_code) {
     mexprcpp_operators_t opr_code = (mexprcpp_operators_t)token_code;
 
     switch (token_code) {
-
-        case MATH_CPP_MAX:
-        case MATH_CPP_MIN:
-        case MATH_CPP_POW:
+        // Highest precedence: functions
+        case MATH_CPP_SIN:
+        case MATH_CPP_COS:
+        case MATH_CPP_SQR:
+        case MATH_CPP_SQRT:
+        case MATH_CPP_POW:     // treated as function pow(a,b)
+        case MATH_CPP_MAX:     // max(a,b,...)
+        case MATH_CPP_MIN:     // min(a,b,...)
             return 7;
+
+        // Multiplication / Division
         case MATH_CPP_MUL:
         case MATH_CPP_DIV:
-            return 6;            
+            return 6;
+
+        // Addition / Subtraction
         case MATH_CPP_PLUS:
         case MATH_CPP_MINUS:
             return 5;
-        case MATH_CPP_SIN:
-	    case MATH_CPP_COS:
-        case MATH_CPP_SQR:
-        case MATH_CPP_SQRT:
-            return 4;
+
+        // Relational operators
         case MATH_CPP_LESS_THAN:
-	    case MATH_CPP_LESS_THAN_EQ:
+        case MATH_CPP_LESS_THAN_EQ:
         case MATH_CPP_GREATER_THAN:
-        case MATH_CPP_NEQ:
-        case MATH_CPP_EQ:
         case MATH_CPP_GREATER_THAN_EQ:
-            return 3;
+        case MATH_CPP_EQ:
+        case MATH_CPP_NEQ:
+            return 4;
+
+        // Logical AND
         case MATH_CPP_AND:
-            return 2;
+            return 3;
+
+        // Logical OR
         case MATH_CPP_OR:
-            return 1;
+            return 2;
+
+        // Brackets & commas (special handling, lowest precedence)
         case MATH_CPP_BRACKET_START:
         case MATH_CPP_BRACKET_END:
         case MATH_CPP_COMMA:
             return 0;
     }
-    assert(0);
+    assert(0); // Unknown token
     return 0;
 } 
 

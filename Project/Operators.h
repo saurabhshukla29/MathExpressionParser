@@ -166,4 +166,15 @@ class OperatorMin : public Operator{
     virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
+class OperatorPow : public Operator{
+    private:
+    protected:
+    public:
+    OperatorPow();
+    ~OperatorPow();
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
+};
+
 #endif

@@ -10,12 +10,15 @@ extern "C" {
 #endif
 
 lex_data_t **convertInfixToPostfix(lex_data_t *data, int size, int *out_size);
+void Calculator(MexpTree * Tree);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif
+
+
 
 stack_t undo_stack = {-1,{0,0,0}};
 
@@ -296,6 +299,7 @@ void RESTORE_CHKP(int a){
 extern parse_rc_t A();
 extern parse_rc_t Q();
 extern parse_rc_t E();
+extern void Calculator();
 
 int main(int argc, char **argv) {
     while (1) {
@@ -309,74 +313,26 @@ int main(int argc, char **argv) {
 
         yy_scan_string(lex_buffer);
 
-
-
-        /*
-        int token_code = yylex();
-
-        while (token_code!= PARSER_EOL) {
-            printf("token_code = %d, text = %s, len = %lu\n", token_code, yytext, strlen(yytext));
-            token_code = yylex();
-        }
-        */
-
-
-
-
-        /*
-        parse_rc_t err= A();
-        if(err == PARSE_ERR){
-            printf("A : Rejected\n");
-        }else{
-            printf("A : Accepted\n");
-            printf("%d\n", undo_stack.top);
-            for(int i=0;i<=undo_stack.top;i++){
-                lex_data_t *data = &undo_stack.data[i];
-                printf("%s ", data->token_val);
-            }
-            printf("\n");
-        }
-        */
-
-
-
-        /*
-        parse_rc_t err = Q();
-        if(err == PARSE_ERR){
-            printf("Rejected : Invalid Select Statement\n");
-        }else{
-            printf("Accepted : Valid Statement \n");
-        }
-        */
-
-
-
         parse_rc_t err = Q();
         int token_code = cyylex();
         if(token_code != PARSER_EOL){
-            printf("Rejected : Entire String is not Mathematical Expression\n");
-        }else{
+            Parser_stack_reset();
+            err = E();
             if(err == PARSE_ERR){
-                printf("Rejected : Invalid Mathematical Expression\n");
+                printf("Rejected E: Invalid Mathematical Expression\n");
             }else{
                 printf("Accepted : Valid Expression\n");
-                printf("Expression :");
-                for(int i = 0; i <= undo_stack.top; i++){
-                    lex_data_t *lex_data = &undo_stack.data[i];
-                    printf("%s", lex_data -> token_val);
-                }
-                printf("\n");
                 int size_out = 0;
                 lex_data_t **postfixArray = convertInfixToPostfix(undo_stack.data,
                                                                 undo_stack.top + 1,
                                                                 &size_out);
                 printf("Postfix: ");
-                printf("%d\n",size_out);
-                for(int i = 0;i < size_out; i++){
-                    lex_data_t *lex_data = postfixArray[i];
-                    printf("%s", lex_data -> token_val);
-                    printf(" ");
-                }
+                    printf("%d\n",size_out);
+                    for(int i = 0;i < size_out; i++){
+                        lex_data_t *lex_data = postfixArray[i];
+                        printf("%s", lex_data -> token_val);
+                        printf(" ");
+                    }
                 printf("\n");
                 printf("Constructing Expression Tree\n");
                 MexpTree *Tree = new MexpTree(postfixArray,size_out);
@@ -385,6 +341,47 @@ int main(int argc, char **argv) {
                 printf("\n");
                 if(Tree -> validate(Tree -> root)){
                     printf("Expression Tree is Valid\n");
+                    Calculator(Tree);
+                }else{
+                    printf("Expression Tree is not Valid\n");
+                }
+            }
+        }else{
+            if(err == PARSE_ERR){
+                printf("Rejected Q: Invalid Mathematical Expression\n");
+            }else{
+                printf("Accepted : Valid Expression\n");
+                /*
+                    printf("Expression :");
+                    for(int i = 0; i <= undo_stack.top; i++){
+                        lex_data_t *lex_data = &undo_stack.data[i];
+                        printf("%s", lex_data -> token_val);
+                    }
+                    printf("\n");
+                */
+                int size_out = 0;
+                lex_data_t **postfixArray = convertInfixToPostfix(undo_stack.data,
+                                                                undo_stack.top + 1,
+                                                                &size_out);
+
+                /*
+                    printf("Postfix: ");
+                    printf("%d\n",size_out);
+                    for(int i = 0;i < size_out; i++){
+                        lex_data_t *lex_data = postfixArray[i];
+                        printf("%s", lex_data -> token_val);
+                        printf(" ");
+                    }
+                    printf("\n");
+                */
+                printf("Constructing Expression Tree\n");
+                MexpTree *Tree = new MexpTree(postfixArray,size_out);
+                printf("Tree \n");
+                MexpTree :: Inorder(Tree);
+                printf("\n");
+                if(Tree -> validate(Tree -> root)){
+                    printf("Expression Tree is Valid\n");
+                    Calculator(Tree);
                 }else{
                     printf("Expression Tree is not Valid\n");
                 }
