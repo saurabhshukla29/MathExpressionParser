@@ -11,6 +11,9 @@ class Dtype : public MexpNode {
     Dtype();
     public:
     mexprcpp_dtypes_t d_id;   // Dtype ID
+
+    bool isResolved; // to check if the variable is resolved or not
+
     virtual ~Dtype();
     // This is a factory method which will return the Dtype object based on the did passed
     static Dtype * factory(mexprcpp_dtypes_t did, std :: string val);
@@ -94,5 +97,26 @@ class Dtype_BOOL : public Dtype{
     virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
 };
 
+// variable Dtype
+class Dtype_VARIABLE : public Dtype{
+    
+    private:
+    protected:
+    public:
+    std :: string var_name;
+    // resolution Information
+    void * data_src;
+    Dtype *(*compute_fn_ptr)(void *);
+    mexprcpp_dtypes_t resoved_did;
+
+    Dtype_VARIABLE();
+    Dtype_VARIABLE(std :: string var);  // parametrized constructor
+    ~Dtype_VARIABLE();
+    virtual void setValue(void *value) override;
+    virtual void setValue (Dtype *) override;
+    virtual MexpNode *clone() override;
+    virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
+    virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
+};
 
 #endif

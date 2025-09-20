@@ -6,6 +6,7 @@ using namespace std;
 // This operator is used to define a constructor outside the class
 Dtype :: Dtype(){
     this -> d_id = MATH_CPP_DTYPE_INVALID;
+    this -> isResolved = false; // by default set to false
 }
 
 Dtype :: ~Dtype(){
@@ -35,6 +36,7 @@ Dtype_INT :: Dtype_INT(){
 Dtype_INT :: Dtype_INT(int val){
     this -> d_id = MATH_CPP_INT;
     this -> int_val = val;
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 Dtype_INT :: ~Dtype_INT(){
@@ -43,11 +45,13 @@ Dtype_INT :: ~Dtype_INT(){
 
 void Dtype_INT :: setValue(void *value){
     this -> int_val = atoi((char *)value);
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 void Dtype_INT :: setValue(Dtype *dtype){
     Dtype_INT *int_dtype = dynamic_cast<Dtype_INT *>(dtype);
     this -> int_val = int_dtype -> int_val;
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 MexpNode* Dtype_INT :: clone(){
@@ -77,6 +81,7 @@ Dtype_DOUBLE :: Dtype_DOUBLE(){
 Dtype_DOUBLE :: Dtype_DOUBLE(double val){
     this -> d_id = MATH_CPP_DOUBLE;
     this -> double_val = val;
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 Dtype_DOUBLE :: ~Dtype_DOUBLE(){
@@ -85,11 +90,13 @@ Dtype_DOUBLE :: ~Dtype_DOUBLE(){
 
 void Dtype_DOUBLE :: setValue(void *value){
     this -> double_val = (double)atof((char *)value);
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 void Dtype_DOUBLE :: setValue(Dtype *dtype){
     Dtype_DOUBLE *double_dtype = dynamic_cast<Dtype_DOUBLE *>(dtype);
     this -> double_val = double_dtype -> double_val;
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 
@@ -131,11 +138,13 @@ void Dtype_STRING :: setValue(void *value){
     // remove the single quotes from the string if present
     this -> string_val.erase(remove(this -> string_val.begin(), this -> string_val.end(), '\''), 
                             this -> string_val.end());
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 void Dtype_STRING :: setValue(Dtype *dtype){
     Dtype_STRING *string_dtype = dynamic_cast<Dtype_STRING *>(dtype);
     this -> string_val = string_dtype -> string_val;
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 MexpNode* Dtype_STRING :: clone(){
@@ -160,6 +169,7 @@ Dtype *  Dtype_STRING :: compute(Dtype *dtype1 , Dtype *dtype2){
 // bool Dtype   
 Dtype_BOOL :: Dtype_BOOL(){
     this -> d_id = MATH_CPP_BOOL;
+    this -> isResolved = true; // by default set to true
 }
 
 Dtype_BOOL :: ~Dtype_BOOL(){
@@ -173,6 +183,7 @@ void Dtype_BOOL :: setValue(void *value){
 void Dtype_BOOL :: setValue(Dtype *dtype){
     Dtype_BOOL *bool_dtype = dynamic_cast<Dtype_BOOL *>(dtype);
     this -> bool_val = bool_dtype -> bool_val;
+    this -> isResolved = true; // since value is assigned, set to true
 }
 
 
@@ -195,6 +206,34 @@ Dtype *  Dtype_BOOL :: compute(Dtype *dtype1 , Dtype *dtype2){
     return dynamic_cast<Dtype *>(clone());
 }
 
+
+// Variable Dtype
+Dtype_VARIABLE :: Dtype_VARIABLE(){
+    this -> d_id = MATH_CPP_VARIABLE;
+    this -> isResolved = false; // by default set to false
+    this -> var_name = "";
+    this -> resoved_did = MATH_CPP_DTYPE_WILDCRAD;
+}
+
+Dtype_VARIABLE :: Dtype_VARIABLE(std :: string var){
+    this -> d_id = MATH_CPP_VARIABLE;
+    this -> isResolved = false; // by default set to false
+    this -> var_name = var;
+    this -> resoved_did = MATH_CPP_DTYPE_WILDCRAD;
+}
+
+Dtype_VARIABLE :: ~Dtype_VARIABLE(){
+    // cout << "Dtype_VARIABLE destructor called" << endl;
+}
+
+void Dtype_VARIABLE :: setValue(void *value){
+    // do nothing for now
+}
+
+void Dtype_VARIABLE :: setValue(Dtype *dtype){
+   // do nothing for now
+}
+
 // General Rule of defining function outside class
 // <return-type> <ClassName>::<FunctionName>(parameters) { ... }
 Dtype* Dtype :: factory(mexprcpp_dtypes_t d_id, string val){
@@ -214,6 +253,18 @@ Dtype* Dtype :: factory(mexprcpp_dtypes_t d_id, string val){
         Dtype_STRING *string_node = new Dtype_STRING();
         string_node -> string_val = val;
         return string_node;
+    }
+    case (int)MATH_CPP_BOOL:{
+        Dtype_BOOL *bool_node = new Dtype_BOOL();
+        if(val == "true" || val == "1")
+            bool_node -> bool_val = true;
+        else
+            bool_node -> bool_val = false;
+        return bool_node;
+    }
+    case (int)MATH_CPP_VARIABLE:{
+        Dtype_VARIABLE *var_node = new Dtype_VARIABLE();
+        return var_node;
     }
     default:
         assert(false); // should never reach here
