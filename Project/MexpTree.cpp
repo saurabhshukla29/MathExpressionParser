@@ -52,6 +52,15 @@ MexpTree :: MexpTree(lex_data_t **postfix_array, int size){
         if(Math_cpp_is_operand(postfix_array[i] -> token_code)){
             string str = postfix_array[i] -> token_val;
             MexpNode *node = Dtype :: factory((mexprcpp_dtypes_t)postfix_array[i] -> token_code, str);
+            Dtype *dtype = dynamic_cast<Dtype *>(node);
+            Dtype_VARIABLE *var_dtype = dynamic_cast<Dtype_VARIABLE *>(dtype);
+            if(var_dtype){
+                node -> First_right = this -> First_head;
+                if(this -> First_head){
+                    this -> First_head -> First_left = node;
+                }
+                this -> First_head = node;
+            }
             st.push(node);
         }else if(Math_cpp_is_unary_operator(postfix_array[i] -> token_code)){
             MexpNode *node = Operator :: factory((mexprcpp_operators_t)postfix_array[i] -> token_code);
@@ -107,6 +116,16 @@ void InorderTraversal(MexpNode *node){
                 case (int)MATH_CPP_STRING:{
                     Dtype_STRING *string_node = dynamic_cast<Dtype_STRING*>(dt_node);
                     cout << string_node -> string_val << " ";
+                    break;
+                }
+                case (int)MATH_CPP_BOOL:{
+                    Dtype_BOOL *bool_node = dynamic_cast<Dtype_BOOL*>(dt_node);
+                    cout << (bool_node -> bool_val ? "true" : "false") << " ";
+                    break;
+                }
+                case (int)MATH_CPP_VARIABLE:{
+                    Dtype_VARIABLE *var_node = dynamic_cast<Dtype_VARIABLE*>(dt_node);
+                    cout << var_node -> var_name << " ";
                     break;
                 }
                 default:{

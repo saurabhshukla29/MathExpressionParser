@@ -106,8 +106,8 @@ class Dtype_VARIABLE : public Dtype{
     std :: string var_name;
     // resolution Information
     void * data_src;
-    Dtype *(*compute_fn_ptr)(void *);
-    mexprcpp_dtypes_t resoved_did;
+    Dtype *(*compute_fn_ptr)(char *, void *);
+    mexprcpp_dtypes_t resolved_did;
 
     Dtype_VARIABLE();
     Dtype_VARIABLE(std :: string var);  // parametrized constructor
@@ -117,6 +117,7 @@ class Dtype_VARIABLE : public Dtype{
     virtual MexpNode *clone() override;
     virtual mexprcpp_dtypes_t result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2) override;
     virtual Dtype *compute(Dtype * dtype1, Dtype * dtype2) override;
+    void ResolveOperand(mexprcpp_dtypes_t resolved_did, 
+        void * data_src, Dtype *(*compute_fn_ptr)(char *, void *));
 };
-
 #endif

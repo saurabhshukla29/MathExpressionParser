@@ -212,14 +212,14 @@ Dtype_VARIABLE :: Dtype_VARIABLE(){
     this -> d_id = MATH_CPP_VARIABLE;
     this -> isResolved = false; // by default set to false
     this -> var_name = "";
-    this -> resoved_did = MATH_CPP_DTYPE_WILDCRAD;
+    this -> resolved_did = MATH_CPP_DTYPE_WILDCRAD;
 }
 
 Dtype_VARIABLE :: Dtype_VARIABLE(std :: string var){
     this -> d_id = MATH_CPP_VARIABLE;
     this -> isResolved = false; // by default set to false
     this -> var_name = var;
-    this -> resoved_did = MATH_CPP_DTYPE_WILDCRAD;
+    this -> resolved_did = MATH_CPP_DTYPE_WILDCRAD;
 }
 
 Dtype_VARIABLE :: ~Dtype_VARIABLE(){
@@ -232,6 +232,42 @@ void Dtype_VARIABLE :: setValue(void *value){
 
 void Dtype_VARIABLE :: setValue(Dtype *dtype){
    // do nothing for now
+}
+
+MexpNode* Dtype_VARIABLE :: clone(){
+    Dtype_VARIABLE *new_node = new Dtype_VARIABLE();
+    *new_node = *this;
+    this -> parent = NULL;
+    this -> left = NULL;
+    this -> right = NULL;
+    this -> First_left = NULL;
+    this -> First_right = NULL;
+    return new_node;
+}
+
+mexprcpp_dtypes_t Dtype_VARIABLE :: result(mexprcpp_dtypes_t d_id1 , mexprcpp_dtypes_t d_id2){
+    if(this -> isResolved){
+        return this -> resolved_did;
+    }else return MATH_CPP_DTYPE_WILDCRAD;
+}
+
+Dtype *  Dtype_VARIABLE :: compute(Dtype *dtype1 , Dtype *dtype2){
+    if(!this -> isResolved){
+        return NULL;
+    }
+    Dtype *res = this -> compute_fn_ptr((char *)this -> var_name.c_str(), this -> data_src);
+    return res;
+}
+
+void Dtype_VARIABLE :: ResolveOperand(mexprcpp_dtypes_t resolved_did, 
+    void * data_src, Dtype *(*compute_fn_ptr)(char *, void *)){
+
+    assert(!this -> isResolved); // should not be already resolved
+    
+    this -> resolved_did = resolved_did;
+    this -> data_src = data_src;
+    this -> compute_fn_ptr = compute_fn_ptr;
+    this -> isResolved = true;
 }
 
 // General Rule of defining function outside class
@@ -264,6 +300,7 @@ Dtype* Dtype :: factory(mexprcpp_dtypes_t d_id, string val){
     }
     case (int)MATH_CPP_VARIABLE:{
         Dtype_VARIABLE *var_node = new Dtype_VARIABLE();
+        var_node -> var_name = val;
         return var_node;
     }
     default:
